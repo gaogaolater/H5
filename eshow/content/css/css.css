@@ -48,7 +48,6 @@ html,body{height:100%;}
 .wrap .middle .right
 {
     width:150px;background-color:white;
-    overflow-y:auto;
 	display:-webkit-box;
     display:box;
 	-webkit-box-orient:vertical;
