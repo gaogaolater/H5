@@ -90,6 +90,7 @@ $(function () {
 			$("#phonescreen").bind("mousedown",this.mousedown);
 			$("#phonescreen").bind("mousemove",this.mousemove);
 			$("#phonescreen").bind("mouseup",this.mouseup);
+			$("#phonescreen").bind("keydown",this.keydown);
 			$("#cm_edit").click(this.editFont);
 			$("#fonttoolbar").click(this.fontbarEvent);
 			$("#cm_delete").click(this.deleteObj);
@@ -116,6 +117,14 @@ $(function () {
 			this.loadPic();
 			this.loadJsonData();
 			$("#contextmenu").click(this.clickContextMenu);
+		},
+		keydown:function(e){
+			//避免删除文字后 再次输入文字位置错误
+			if(etouch.editTarget){
+				if(etouch.editTarget.find("span").size()==0){
+					etouch.editTarget.append("<span></span>");
+				}
+			}
 		},
 		animatEvent:function(){
 			if(etouch.editTarget){
@@ -244,6 +253,7 @@ $(function () {
 				etouch.moveTarget.relativeTop = null;
 			}
 			else if(className && className.indexOf("pageitem")!=-1){
+				etouch.isEdit = false;
 				$("#fonttoolbar").hide();
 				$(".bar").hide();
 				$("div[contenteditable=true]").removeAttr("contenteditable");
@@ -254,17 +264,25 @@ $(function () {
 			$("#contextmenu").hide();
 		},
 		showContextMenu:function(e){
-			var target = $(e.target);
-			var type = target.attr("type");
-			if(type=== undefined ||type.indexOf("edit")==-1){
-				target=target.parent();
+			if(etouch.isPageItem(e.target)==false){
+				var target = $(e.target);
+				var type = target.attr("type");
+				if(type === undefined ||type.indexOf("edit")==-1){
+					target = target.parent();
+				}
+				etouch.editTarget = $(target);
+				var x = e.clientX - $(this)[0].offsetLeft;
+				var y = e.clientY - $(this)[0].offsetTop;
+				$("#contextmenu").css({ position: 'absolute', top: y, left: x });
+				$("#contextmenu").show();
 			}
-			etouch.editTarget = $(target);
-			var x = e.clientX - $(this)[0].offsetLeft;
-			var y = e.clientY - $(this)[0].offsetTop;
-			$("#contextmenu").css({ position: 'absolute', top: y, left: x });
-			$("#contextmenu").show();
 			e.preventDefault();
+		},
+		isPageItem:function(target){
+			if(target.getAttribute("class").indexOf("pageitem")==-1)
+				return false;
+			else
+				return true;
 		},
 		loadPic:function(){
 			var picPanel = $("#picList");
@@ -437,36 +455,3 @@ var pageObj = function(){
 	this.effect=[];
 	this.video=[];
 }
-
-
-/*
-
-	$("#phonescreen").bind("mouseup", function (e) {
-		if (e.button == 2) return;
-		target = null;
-		ox = 0; oy = 0;
-	});
-	//偏移量
-	var ox = 0, oy = 0;
-	$("#phonescreen").bind("mousemove", function (e) {
-		
-	});
-	var phoneW = Math.round($("#phonescreen").width());
-	var phoneH = Math.round($("#phonescreen").height());
-	$("#phonescreen").bind("dblclick", function (e) {
-		if (e.button == 2) return;
-		if (e.target.id != 'phonescreen') {
-			var x = e.clientX - $(this).attr("offsetLeft") + 'px';
-			var y = e.clientY - $(this).attr("offsetTop") + 'px';
-			var input = document.createElement("input");
-			var perX = x / phoneW + "%";
-			var perY = y / phoneH + "%";
-			$(input).css({ position: 'absolute', top: perY, left: perX });
-			$(input).val(e.target.innerText);
-			$(this).append(input);
-		}
-	});
-	var targetA = null; //动画元素
-	
-	
-	*/
