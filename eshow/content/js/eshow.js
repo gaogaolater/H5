@@ -121,9 +121,11 @@ $(function () {
 		keydown:function(e){
 			//避免删除文字后 再次输入文字位置错误
 			if(etouch.editTarget){
+				/*
 				if(etouch.editTarget.find("span").size()==0){
 					etouch.editTarget.append("<span></span>");
 				}
+				*/
 			}
 		},
 		animatEvent:function(){
