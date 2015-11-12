@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>单页WEBAPP后台</title>
+	<link href="./content/css/css.css" rel="stylesheet" type="text/css" />
+	<link href="./content/css/main.css" rel="stylesheet" type="text/css" />
+	<link href="./content/css/animat.css" rel="stylesheet" type="text/css" />
+    <style>
+        .move{position:absolute;}
+        .text{font-size:16px;font-weight:bold;text-align:center;}
+        #contextmenu{width:80px;border:1px solid gray;background-color:white;z-index:9999;}
+        #contextmenu li{
+			width:80%;height:25px;line-height:25px;text-align:left;
+			font-size:12px;float:left;padding-left:20%;cursor:pointer;
+		}
+		#contextmenu li:hover{
+			background-color:#08A1EF;
+		}
+        #phonescreen img{position:absolute;}
+        .rotate	
+        {
+            animation: 9.5s linear 0s normal none infinite rotate;
+            -webkit-animation:9.5s linear 0s normal none infinite rotate;
+        }
+    </style>
+	
+	<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+	<script src="./content/js/eshow.js" type="text/javascript"></script>
+</head>
+<body>
+<article class="wrap">
+    <section class="top">
+        <ul>
+            <li id="menuAddText">文本</li>
+            <li id="menuAddBgPic">背景</li>
+            <li id="menuAddAudio">音乐</li>
+            <li id="menuAddPic">图片</li>
+            <li id="menuAddVideo">视频</li>
+            <li id="menuAddAnimat">特效</li>
+			<li onclick="window.open('preview.html')">预览</li>
+        </ul>
+    </section>
+    <section class="middle">
+        <div class="left"></div>
+        <div class="center">
+            <div class="phoneBox">
+                <div class="phonetop"></div>
+                <div class="phone_menubar"></div>
+                <div class="scene_title_baner">
+                    <div class="scene_title" contenteditable="true">我的单页应用</div>
+                </div>
+                <div class="phonescreenwrap">
+                    <!--这里的代码可以直接预览-->
+                    <div class="phonescreen" id="phonescreen">
+                    
+						<div id="contextmenu" style="display:none;z-index:999;">
+                            <ul>
+                                <li id="cm_edit">编辑</li>
+                                <li id="cm_animat">动画</li>
+								<li id="cm_delete">删除</li>	
+								<li id="cm_link">关闭</li>	
+                            </ul>
+                        </div>
+						
+						
+						<div class="fonttoolbar" id="fonttoolbar" style="display:none;z-index:900;">
+							<a id="size">大小
+								<ul id="fontsizelist" style="display:none;">
+									<li val='96'>96px</li>
+									<li val='64'>64px</li>
+									<li val='48'>48px</li>
+									<li val='32'>32px</li>
+									<li val='20'>20px</li>
+									<li val='18'>18px</li>
+									<li val='16'>16px</li>
+									<li val='14'>14px</li>
+									<li val='12'>12px</li>
+								</ul>
+							</a>
+							<a id="color">颜色<input id="colorpicker" style="width:0;height:0;opacity:0;" oninput="etouch.changeColor(this.value)" type="color" value="#ff00ff"></a>
+							<a id="bolder">粗体</a>
+						</div>
+					
+                    </div>
+                </div>
+                <div class="phonebottom"></div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="pageList" id='pageList'>
+				
+            </div>
+            <div id="addpage" class="addpage">+</div>
+        </div>
+    </section>
+</article>
+
+<div id="bgPanel" class="bgPanel" style="display:none;">
+	<div class="top">背景素材库</div>
+	<div id="bgPicList" class="middle">
+		
+	</div>
+	<div class="bottom">
+		<span id="bgPanelClose">取消</span>
+	</div>
+</div>
+
+<div id="picPanel" class="bgPanel" style="display:none;">
+	<div class="top">图片素材库</div>
+	<div id="picList" class="middle">
+		
+	</div>
+	<div class="bottom">
+		<span id="picPanelClose">取消</span>
+	</div>
+</div>
+
+<div id="animatPanel" class="animatPanel" style="display:none;">
+	<div class="top">动画库</div>
+	<div class="middle">
+		<table>
+			<tr>
+				<td style="width:60px;">方式</td>
+				<td align="left">
+					<select id="animatType" style="width:100px;border:1px solid #C9C9C9">
+						<option value="0" selected="selected">无</option>
+						<option value="1">淡入</option>
+						<option value="2">移入</option>
+						<option value="3">弹入</option>
+					</select>
+				</td>
+			</tr>
+			<tr id="animatDirectionTr" style="display:none;">
+				<td>方向</td>
+				<td align="left">
+					<select id="animatDirection">
+						<option value="0" selected="selected">从左向右</option>
+						<option value="1">从上到下</option>
+						<option value="2">从右向左</option>
+						<option value="3">从下到上</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>时间</td>
+				<td align="left">
+					<input id="animatTime" type="text" value="2"/>秒
+				</td>
+			</tr>
+			<tr>
+				<td>延迟</td>
+				<td align="left">
+					<input id="animatDelay" type="text" value="0"/>秒
+				</td>
+			</tr>
+			<tr>
+				<td>次数</td>
+				<td align="left" valign="center">
+					<input id="animatTimes" type="text" value="1"/>
+					<input id="animatInfinite" type="checkbox"/>
+					无限次
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="bottom">
+		<span id="animatPanelClose">取消</span>
+		<span id="animatPanelOK">确定</span>
+	</div>
+</div>
+
+<!--resize border-->
+<div class="comp-resize" id="resizeborder" 
+style="position:absolute;width:100px;height:100px;top:100px;left:10px;display:none;">
+	<div class="bar bar-n" style="cursor: n-resize; touch-action: pan-x pan-y; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: block;">
+		<div class="bar-radius"></div>
+	</div>
+	<div class="bar bar-s" style="cursor: s-resize; touch-action: pan-x pan-y; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: block;">
+		<div class="bar-radius"></div>
+	</div>
+	<div class="bar bar-e" style="cursor: e-resize; touch-action: pan-x pan-y; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: block;">
+		<div class="bar-radius"></div>
+	</div>
+	<div class="bar bar-w" style="cursor: w-resize; touch-action: pan-x pan-y; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: block;">
+		<div class="bar-radius"></div>
+	</div>
+	<div class="bar bar-nw bar-radius" style="cursor: nw-resize; touch-action: pan-x pan-y; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: block;"></div>
+	<div class="bar bar-se bar-radius" style="cursor: se-resize; touch-action: pan-x pan-y; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: block;"></div>
+	<div class="bar bar-sw bar-radius" style="cursor: sw-resize; touch-action: pan-x pan-y; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: block;"></div>
+	<div class="bar bar-ne bar-radius" style="cursor: ne-resize; touch-action: pan-x pan-y; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: block;"></div>
+</div>
+
+<script src="./content/js/bgPicData.js" type="text/javascript"></script>
+<script src="./content/js/picData.js" type="text/javascript"></script>
+<script src="./content/js/fullPage.js" type="text/javascript"></script>
+<script>
+runSection = new FullPage({
+	id : 'phonescreen',                            // id of contain
+	slideTime : 800,                               // time of slide
+    effect : {                                     // slide effect
+        transform : {
+        	translate : 'Y',					   // 'X'|'Y'|'XY'|'none'
+        	scale : [0, 1],					   // [scalefrom, scaleto]
+        	rotate : [0, 0]					   // [rotatefrom, rotateto]
+        },
+        opacity : [0, 1]                           // [opacityfrom, opacityto]
+    },                           
+	mode : 'touch,wheel',               // mode of fullpage
+	easing : [0, .93, .39, .98],
+	callback : function(index, thisPage) {     // callback when pageChange
+        if (index === 0) {
+        	//autoPlay(runPage.thisPage() + 1);
+        } else {
+        	//clearTimeout(interval);
+        }
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" id="viewport" content="minimal-ui,target-densitydpi=medium-dpi,initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+ 
+    <title>单页WEBAPP后台</title>
+	<link href="./content/css/css.css" rel="stylesheet" type="text/css" />
+	<link href="./content/css/main.css" rel="stylesheet" type="text/css" />
+	<link href="./content/css/animat.css" rel="stylesheet" type="text/css" />
+	<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+<!--这里的代码可以直接预览-->
+<div class="phonescreen" id="phonescreen">
+	
+</div>    
+<script src="./content/js/fullPage.js" type="text/javascript"></script>
+<script>
+var html=localStorage.webAppHTML;
+if(html){
+	$("#phonescreen").html(html);
+	$(".pageitem").css('display', '');
+	$(".pageitem").addClass("page");
+	$(".pageitem").eq(0).addClass("current");
+	$("#contextmenu").remove();
+	$("#fonttoolbar").remove();
+	$(".bar").remove();
+}
+
+runSection = new FullPage({
+	id : 'phonescreen',                            // id of contain
+	slideTime : 800,                               // time of slide
+    effect : {                                     // slide effect
+        transform : {
+        	translate : 'Y',					   // 'X'|'Y'|'XY'|'none'
+        	scale : [0, 1],					   // [scalefrom, scaleto]
+        	rotate : [0, 0]					   // [rotatefrom, rotateto]
+        },
+        opacity : [0, 1]                           // [opacityfrom, opacityto]
+    },                           
+	mode : 'touch,wheel',               // mode of fullpage
+	easing : [0, .93, .39, .98],
+	callback : function(index, thisPage) {     // callback when pageChange
+        if (index === 0) {
+        	//autoPlay(runPage.thisPage() + 1);
+        } else {
+        	//clearTimeout(interval);
+        }
+    }
+});
+</script>
+</body>
+</html>
