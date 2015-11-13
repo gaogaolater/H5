@@ -63,13 +63,16 @@ $(function () {
 		phoneH:0,
 		webApp:{page:[],transition:'',audio:{}},//整个页面对象
 		dragTarget:null,//当前拖拽的物体
-		currentPageIndex:0,
+		currentPageIndex:-1,//-1表示没有页面
 		isEdit:false,//是否文字编辑状态
 		editTarget:null,//右键目标
 		moveTarget:null,//拖拽目标
 		resizeTarget:null,//缩放目标
 		editDivTarget:null,//编辑div目标
 		getCurrentPage:function(){
+			if(etouch.currentPageIndex==-1){
+				return null;
+			}
 			return $(".pageitem").eq(etouch.currentPageIndex);
 		},
 		init:function(){
@@ -392,16 +395,20 @@ $(function () {
 			}
 			removePage.remove();
 			$("span[name='deletePage']").eq(index).parent().remove();
-			
-			//重新排序
-			$("span[name='deletePage']").each(function(i,obj){
-				$(obj).parent().attr("index",i);
-				$(obj).parent().find("a").text("第"+(i+1)+"页");
-				
-				if($(obj).parent().css("backgroundColor")===""){
-					etouch.currentPageIndex = i;
-				}
-			});
+			if($(".pageitem").size()==0){
+				etouch.currentPageIndex = -1;
+			}
+			else{
+				//重新排序
+				$("span[name='deletePage']").each(function(i,obj){
+					$(obj).parent().attr("index",i);
+					$(obj).parent().find("a").text("第"+(i+1)+"页");
+					
+					if($(obj).parent().css("backgroundColor")===""){
+						etouch.currentPageIndex = i;
+					}
+				});
+			}
 		},
 		showPage:function(index){
 			etouch.currentPageIndex = index;
@@ -411,7 +418,11 @@ $(function () {
 			$("#pageList p").eq(index).css("backgroundColor","");
 		},
 		addText:function(){
-			var id="editdiv"+new Date().getTime();
+			if(etouch.currentPageIndex==-1){
+				alert("请先添加页面");
+				return;
+			}
+			var id = "editdiv"+new Date().getTime();
 			etouch.getCurrentPage().append("<div id='"+id+"' type='editdiv' draggable='true' class='comp-resize defaultfontstyle' name='pagefont'><span type='drag_inner_text'>请在这里编辑</span></div>");
 			$("#"+id).append($("#resizeborder").html());
 			$("#"+id).find(".bar").hide();
@@ -420,12 +431,20 @@ $(function () {
 			
 		},
 		addPic:function(){
+			if(etouch.currentPageIndex==-1){
+				alert("请先添加页面");
+				return;
+			}
 			$("#picPanel").show();
 			//etouch.append("<img id='imgap' src='http://res.eqxiu.com/group1/M00/BB/5F/yq0KA1Ru0-WASRNsAABwW066NG0877.png'/>");
 		},
 		removePic:function(){},
 		addBackgroundPic:function(){
 			//添加背景
+			if(etouch.currentPageIndex==-1){
+				alert("请先添加页面");
+				return;
+			}
 			$("#bgPanel").show();
 		},
 		removeBackgroundPic:function(){},
