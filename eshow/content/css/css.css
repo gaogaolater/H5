@@ -180,6 +180,14 @@ html,body{height:100%;}
 }
 .bgPanel .middle img{
 	width: 115px;
+    height: 156px;
+    margin: 5px 0 5px 30px;
+	overflow:hidden;
+	float:left;
+	cursor:pointer;
+}
+.picPanel .middle img{
+	width: 115px;
     height: 96px;
     margin: 5px 0 5px 30px;
 	overflow:hidden;
@@ -416,8 +424,37 @@ html,body{height:100%;}
 .animatPanel table td input[type='checkbox']{
 	width:20px;float:left;margin-top:5px;
 }
+/*音乐相关*/
+#audio_btn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 200;
+    display: none;
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+}
+.off {
+    background-image: url(../images/normalmusic.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.rotate {
+    -webkit-animation: rotating 1.2s linear infinite;
+    -moz-animation: rotating 1.2s linear infinite;
+    -o-animation: rotating 1.2s linear infinite;
+    animation: rotating 1.2s linear infinite;
+}
+@-webkit-keyframes rotating {
+    from {
+        -webkit-transform: rotate(0deg)
+    }
 
-
+    to {
+        -webkit-transform: rotate(360deg)
+    }
+}
 
 
 

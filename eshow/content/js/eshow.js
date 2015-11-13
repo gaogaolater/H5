@@ -10,6 +10,17 @@ $(function(){
 		}
 	});
 	
+	$("#audio_btn").click(function(){
+		var className = $(this).attr("class");
+		if(className.indexOf("rotate")!=-1){
+			$(this).removeClass("rotate");
+			$("#media")[0].stop();
+		}
+		else{
+			$(this).addClass("rotate");
+		}
+	});
+	
 	$("#animatPanelOK").click(function(){
 		var val = Number($("#animatType option:selected").val());
 		if(val == 0){
@@ -462,6 +473,8 @@ $(function () {
 				if(jsonData.page.length>0){
 					localStorage.webApp = JSON.stringify(jsonData);
 					var html = $("#phonescreen").html();
+					
+					
 					localStorage.webAppHTML = html;
 				}
 			},3000);
