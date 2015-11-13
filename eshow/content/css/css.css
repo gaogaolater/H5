@@ -192,7 +192,7 @@ html,body{height:100%;}
 	border-top:1px solid #08A1EF;
 }
 .bgPanel .bottom span{
-	width:30px;line-height:30px;width:60px;text-align:center;
+	width:30px;line-height:22px;width:60px;text-align:center;
 	display:block;float:right;margin:15px 10px auto auto;background-color:#08A1EF;
 	cursor:pointer;
 }

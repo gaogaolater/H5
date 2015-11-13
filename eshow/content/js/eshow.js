@@ -14,6 +14,7 @@ $(function(){
 		var val = Number($("#animatType option:selected").val());
 		if(val == 0){
 			etouch.editTarget.css("animation","");
+			$("#animatPanel").hide();
 			return;
 		}
 		var direct = Number($("#animatDirection option:selected").val());
@@ -288,7 +289,6 @@ $(function () {
 		},
 		showContextMenu:function(e){
 			if(etouch.isPageItem(e.target)==false){
-				console.log(e.target);
 				var target = $(e.target);
 				var type = target.attr("type");
 				//寻找最外层
