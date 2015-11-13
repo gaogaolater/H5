@@ -200,7 +200,28 @@ $(function () {
 				e.movementX = e.clientX-target[0].ox;
 				target[0].oy = e.clientY;
 				target[0].ox = e.clientX;
-				if(className.indexOf("bar-s")!=-1){
+				
+				if(className.indexOf("bar-ne")!=-1){
+					parentDom.width(w+e.movementX);
+					parentDom.height(h-e.movementY);
+					parentDom.css("top",top+e.movementY);
+				}
+				else if(className.indexOf("bar-nw")!=-1){
+					parentDom.width(w-e.movementX);
+					parentDom.css("left",left+e.movementX);
+					parentDom.height(h-e.movementY);
+					parentDom.css("top",top+e.movementY);
+				}
+				else if(className.indexOf("bar-sw")!=-1){
+					parentDom.width(w-e.movementX);
+					parentDom.css("left",left+e.movementX);
+					parentDom.height(h+e.movementY);
+				}
+				else if(className.indexOf("bar-se")!=-1){
+					parentDom.width(w+e.movementX);
+					parentDom.height(h+e.movementY);
+				}
+				else if(className.indexOf("bar-s")!=-1){
 					parentDom.height(h+e.movementY);
 				}
 				else if(className.indexOf("bar-n")!=-1){
@@ -214,6 +235,7 @@ $(function () {
 					parentDom.width(w-e.movementX);
 					parentDom.css("left",left+e.movementX);
 				}
+				
 			}
 			else if(etouch.moveTarget != null) {
 				var target = etouch.moveTarget;
