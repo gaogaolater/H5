@@ -166,13 +166,14 @@ $(function () {
 		editFont:function(){
 			var target= etouch.editTarget;
 			if(target.attr("type")=="editdiv"){
-				target.attr("contenteditable","true");
+				var span = target.find("span");
+				span.attr("contenteditable","true");
 				etouch.isEdit = true;
 				//选中
 				var selection = window.getSelection();
-				selection.selectAllChildren(target[0]);
-				var x=target.position().left;
-				var y=target.position().top;
+				selection.selectAllChildren(span[0]);
+				var x = target.position().left;
+				var y = target.position().top;
 				$("#fonttoolbar").css({top:y-40,left:x+20});
 				$("#fonttoolbar").show();
 			}
@@ -235,7 +236,7 @@ $(function () {
 			var target = e.target;
 			
 			var className = target.getAttribute("class");
-			
+			var type = $(target).attr("type");
 			if(className&&className.indexOf("bar")!=-1){
 				if(className == "bar-radius"){
 					target=target.parentNode;
@@ -244,11 +245,9 @@ $(function () {
 				target.ox=target.clientX;//老的x y 用于计算每次移动的距离
 				target.oy=target.clientY;
 			}
-			else if (target.draggable) {
+			else if (type&&type.indexOf("drag_inner")!=-1) {
+				target = target.parentNode;
 				$(".bar").hide();
-				if(target.tagName=="IMG"){
-					target = target.parentNode;
-				}
 				$(target).find(".bar").show();
 				etouch.moveTarget = target;
 				etouch.moveTarget.relativeLeft = null;
@@ -258,7 +257,7 @@ $(function () {
 				etouch.isEdit = false;
 				$("#fonttoolbar").hide();
 				$(".bar").hide();
-				$("div[contenteditable=true]").removeAttr("contenteditable");
+				$("span[contenteditable=true]").removeAttr("contenteditable");
 			}
 			//e.preventDefault(); //防止粘连现象
 		},
@@ -270,7 +269,8 @@ $(function () {
 				console.log(e.target);
 				var target = $(e.target);
 				var type = target.attr("type");
-				if(type === undefined ||type.indexOf("edit")==-1){
+				//寻找最外层
+				if(type === undefined || type.indexOf("edit")==-1){
 					target = target.parent();
 				}
 				etouch.editTarget = $(target);
@@ -332,7 +332,7 @@ $(function () {
 					var path = $(e.target).attr("path");
 					var page = etouch.getCurrentPage();
 					var id = "editpic" + new Date().getTime();
-					page.append("<div id='"+id+"' type='editpic' draggable='true' class='comp-resize defaultpicstyle'><img draggable='true' src='"+path+"'/></div>");
+					page.append("<div id='"+id+"' type='editpic' draggable='true' class='comp-resize defaultpicstyle'><img type='drag_inner_img' src='"+path+"'/></div>");
 					$("#"+id).append($("#resizeborder").html());
 					$("#"+id).find(".bar").hide();
 				}
@@ -390,7 +390,7 @@ $(function () {
 		},
 		addText:function(){
 			var id="editdiv"+new Date().getTime();
-			etouch.getCurrentPage().append("<div id='"+id+"' type='editdiv' draggable='true' class='comp-resize defaultfontstyle' name='pagefont'>请在这里编辑</div>");
+			etouch.getCurrentPage().append("<div id='"+id+"' type='editdiv' draggable='true' class='comp-resize defaultfontstyle' name='pagefont'><span type='drag_inner_text'>请在这里编辑</span></div>");
 			$("#"+id).append($("#resizeborder").html());
 			$("#"+id).find(".bar").hide();
 		},
