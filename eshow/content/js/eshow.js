@@ -267,6 +267,7 @@ $(function () {
 		},
 		showContextMenu:function(e){
 			if(etouch.isPageItem(e.target)==false){
+				console.log(e.target);
 				var target = $(e.target);
 				var type = target.attr("type");
 				if(type === undefined ||type.indexOf("edit")==-1){
@@ -281,7 +282,8 @@ $(function () {
 			e.preventDefault();
 		},
 		isPageItem:function(target){
-			if(target.getAttribute("class").indexOf("pageitem")==-1)
+			var className = target.getAttribute("class");
+			if(className == null || className.indexOf("pageitem")==-1)
 				return false;
 			else
 				return true;
