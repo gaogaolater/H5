@@ -10,7 +10,6 @@
 	<link href="./content/css/main.css" rel="stylesheet" type="text/css" />
 	<link href="./content/css/animat.css" rel="stylesheet" type="text/css" />
 	<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
-	<script src="./content/js/preview.js"></script>
 </head>
 <body>
 <div id="audio_btn" class="off video_exist rotate" style="display: block;">
@@ -21,39 +20,6 @@
 	
 </div>
 <script src="./content/js/fullPage.js" type="text/javascript"></script>
-<script>
-var html=localStorage.webAppHTML;
-if(html){
-	$("#phonescreen").html(html);
-	$(".pageitem").css('display', '');
-	$(".pageitem").addClass("page");
-	$(".pageitem").eq(0).addClass("current");
-	$("#contextmenu").remove();
-	$("#fonttoolbar").remove();
-	$(".bar").remove();
-}
-
-runSection = new FullPage({
-	id : 'phonescreen',                            // id of contain
-	slideTime : 800,                               // time of slide
-    effect : {                                     // slide effect
-        transform : {
-        	translate : 'Y',					   // 'X'|'Y'|'XY'|'none'
-        	scale : [0, 1],					   // [scalefrom, scaleto]
-        	rotate : [0, 0]					   // [rotatefrom, rotateto]
-        },
-        opacity : [0, 1]                           // [opacityfrom, opacityto]
-    },                           
-	mode : 'touch,wheel',               // mode of fullpage
-	easing : [0, .93, .39, .98],
-	callback : function(index, thisPage) {     // callback when pageChange
-        if (index === 0) {
-        	//autoPlay(runPage.thisPage() + 1);
-        } else {
-        	//clearTimeout(interval);
-        }
-    }
-});
-</script>
+<script src="./content/js/preview.js"></script>
 </body>
 </html>

@@ -105,7 +105,6 @@ $(function () {
 			$("#phonescreen").bind("mousedown",this.mousedown);
 			$("#phonescreen").bind("mousemove",this.mousemove);
 			$("#phonescreen").bind("mouseup",this.mouseup);
-			$("#phonescreen").bind("keydown",this.keydown);
 			$("#cm_edit").click(this.editFont);
 			$("#fonttoolbar").click(this.fontbarEvent);
 			$("#cm_delete").click(this.deleteObj);
@@ -132,16 +131,6 @@ $(function () {
 			this.loadPic();
 			this.loadJsonData();
 			$("#contextmenu").click(this.clickContextMenu);
-		},
-		keydown:function(e){
-			//避免删除文字后 再次输入文字位置错误
-			if(etouch.editTarget){
-				/*
-				if(etouch.editTarget.find("span").size()==0){
-					etouch.editTarget.append("<span></span>");
-				}
-				*/
-			}
 		},
 		animatEvent:function(){
 			if(etouch.editTarget){
@@ -201,8 +190,12 @@ $(function () {
 				
 			}
 		},
+		toRem:function(num){
+			return (num/16)+"rem";
+		},
 		mousemove:function(e){
 			if(etouch.resizeTarget!=null){//缩放
+				var et = etouch;
 				var target = $(etouch.resizeTarget);
 				//上下左右  左上 左下 右上 右下
 				var h = target.parent().height();
@@ -217,38 +210,38 @@ $(function () {
 				target[0].ox = e.clientX;
 				
 				if(className.indexOf("bar-ne")!=-1){
-					parentDom.width(w+e.movementX);
-					parentDom.height(h-e.movementY);
-					parentDom.css("top",top+e.movementY);
+					parentDom.width(et.toRem(w+e.movementX));
+					parentDom.height(et.toRem(h-e.movementY));
+					parentDom.css("top",et.toRem(top+e.movementY));
 				}
 				else if(className.indexOf("bar-nw")!=-1){
-					parentDom.width(w-e.movementX);
-					parentDom.css("left",left+e.movementX);
-					parentDom.height(h-e.movementY);
-					parentDom.css("top",top+e.movementY);
+					parentDom.width(et.toRem(w-e.movementX));
+					parentDom.css("left",et.toRem(left+e.movementX));
+					parentDom.height(et.toRem(h-e.movementY));
+					parentDom.css("top",et.toRem(top+e.movementY));
 				}
 				else if(className.indexOf("bar-sw")!=-1){
-					parentDom.width(w-e.movementX);
-					parentDom.css("left",left+e.movementX);
-					parentDom.height(h+e.movementY);
+					parentDom.width(et.toRem(w-e.movementX));
+					parentDom.css("left",et.toRem(left+e.movementX));
+					parentDom.height(et.toRem(h+e.movementY));
 				}
 				else if(className.indexOf("bar-se")!=-1){
-					parentDom.width(w+e.movementX);
-					parentDom.height(h+e.movementY);
+					parentDom.width(et.toRem(w+e.movementX));
+					parentDom.height(et.toRem(h+e.movementY));
 				}
 				else if(className.indexOf("bar-s")!=-1){
-					parentDom.height(h+e.movementY);
+					parentDom.height(et.toRem(h+e.movementY));
 				}
 				else if(className.indexOf("bar-n")!=-1){
-					parentDom.height(h-e.movementY);
-					parentDom.css("top",top+e.movementY);
+					parentDom.height(et.toRem(h-e.movementY));
+					parentDom.css("top",et.toRem(top+e.movementY));
 				}
 				else if(className.indexOf("bar-e")!=-1){
-					parentDom.width(w+e.movementX);
+					parentDom.width(et.toRem(w+e.movementX));
 				}
 				else if(className.indexOf("bar-w")!=-1){
-					parentDom.width(w-e.movementX);
-					parentDom.css("left",left+e.movementX);
+					parentDom.width(et.toRem(w-e.movementX));
+					parentDom.css("left",et.toRem(left+e.movementX));
 				}
 				
 			}
@@ -262,8 +255,8 @@ $(function () {
 				}
 				x = x - target.relativeLeft;
 				y = y - target.relativeTop;
-				var perX = x * 100 / etouch.phoneW + "%";
-				var perY = y * 100 / etouch.phoneH + "%";
+				var perX = x/16+'rem';//rem相对位置
+				var perY = y /16+'rem';
 				$(target).css({ top: perY, left: perX });
 			}
 			e.preventDefault();
@@ -494,13 +487,14 @@ $(function () {
 	{
 		page:[{
 			background:{url:'',animat:[]},
-			image:[{url:'',class:'',width:0,height:0,top:0,left:0,animat:[]}],
-			text:[{val:'',class:'',width:0,height:0,top:0,left:0,animat:[]}],
+			image:[{url:'',css:{width:0rem,height:0rem,top:0rem,left:0rem,animation:''}}],
+			text:[{val:'',css:{width:0rem,height:0rem,top:0rem,left:0rem,animation:''}}],
 			effect:[],//特效
-			video:[{url:'',class:'',width:0,height:0,top:0,left:0,autoPlay:false}]
+			video:[{url:'',css:{width:0rem,height:0rem,top:0rem,left:0rem,animation:'',autoPlay:false}}]
 		}],
 		transition:'',//转场效果
-		audio:{url:'',autoplay:true,class:'',top:0,left:0}
+		audio:{url:'',autoplay:true},
+		wrap:{width:10rem;height:20rem;}
 	}
 	*/
 });
