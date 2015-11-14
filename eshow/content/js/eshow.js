@@ -47,7 +47,7 @@ $(function(){
 					name+="Up";
 					break;
 				case 2:
-					name+="Left";
+					name+="Right";
 					break;
 				case 1:
 					name+="Down";
