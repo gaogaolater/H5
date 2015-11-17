@@ -1,0 +1,5 @@
+C:\Git\h5\EShow_Web\EShow\bin\EShow.dll
+C:\Git\h5\EShow_Web\EShow\bin\EShow.pdb
+C:\Git\h5\EShow_Web\EShow\obj\Debug\ResolveAssemblyReference.cache
+C:\Git\h5\EShow_Web\EShow\obj\Debug\EShow.dll
+C:\Git\h5\EShow_Web\EShow\obj\Debug\EShow.pdb

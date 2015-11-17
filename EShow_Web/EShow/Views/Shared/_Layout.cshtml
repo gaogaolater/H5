@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>@ViewBag.Title</title>
+	<link href="/content/css/css.css" rel="stylesheet" type="text/css" />
+	<link href="/content/css/main.css" rel="stylesheet" type="text/css" />
+	<link href="/content/css/animat.css" rel="stylesheet" type="text/css" />
+    @RenderSection("css", false)
+</head>
+<body>
+    @RenderBody()
+    <script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+    @RenderSection("script",false)
+</body>
+</html>
