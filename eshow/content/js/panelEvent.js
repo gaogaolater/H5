@@ -1,5 +1,12 @@
 $(function(){
-	//用click 样式可能会有问题
+	$("#addApp").click(function(){
+		var name = prompt("璇疯緭鍏ュ簲鐢ㄧ殑鍚嶇О","")
+		if(name){
+			console.log(name);
+		}
+	});
+	
+	//鐢╟lick 鏍峰紡鍙兘浼氭湁闂
 	$("#leftTab").bind("mousedown",function(e){
 		var target = $(e.target);
 		var className = target.attr("class");
@@ -26,7 +33,7 @@ $(function(){
 		$("#animatPanel").hide();
 		$(".cover").hide();
 	});
-	//动画选择方式
+	//鍔ㄧ敾閫夋嫨鏂瑰紡
 	$("#animatType").bind("change",function(){
 		var type = Number($("#animatType option:selected").val());
 		if(type==0||type==1){
@@ -37,7 +44,7 @@ $(function(){
 		}
 	});
 	
-	//动画面板 点击确定
+	//鍔ㄧ敾闈㈡澘 鐐瑰嚮纭畾
 	$("#animatPanelOK").click(function(){
 		var val = Number($("#animatType option:selected").val());
 		if(val == 0){

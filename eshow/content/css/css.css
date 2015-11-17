@@ -91,11 +91,32 @@ html,body{height:100%;}
 	width:100%;
 	overflow-y:auto;
 }
+.wrap .middle .left .content p
+{
+    padding: 0;
+    width: 90%;
+    float: left;
+    margin: 8% 5% 0 5%;
+    height: 40px;
+    line-height: 40px;
+    color: black;
+    font-size: 14px;
+	color:white;
+    text-align: center;
+    background-color: #08A1EF;
+    cursor: pointer;
+}
 .wrap .middle .left .bottom
 {
 	width:100%;
 	height:40px;
 	background-color:#08A1EF;
+    font-size:40px;
+	text-align:center;
+    line-height:40px;
+	color:White;
+	cursor:pointer;
+	margin-top:10px;
 }
 .wrap .middle .right
 {
@@ -119,6 +140,7 @@ html,body{height:100%;}
     height:40px;line-height:40px;color:black;
     font-size:12px; text-align:center;
     background-color:#08A1EF;
+	color:white;
 	cursor:pointer;
 }
 .wrap .middle .right .pageList p span

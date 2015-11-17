@@ -48,6 +48,10 @@
 			$("#contextmenu").click(this.clickContextMenu);
 			//删除和选中事件
 			$("#pageList").click(this.pageTabEvent);
+			$("#menuSave").click(this.saveEvent);
+		},
+		saveEvent:function(){
+			
 		},
 		pageTabEvent:function(e){
 			var tagName = e.target.tagName;
