@@ -1,4 +1,4 @@
-*.dll
+﻿*.dll
 *.pdb
 EShow_Web/EShow/bin
 EShow_Web/EShow/packages
