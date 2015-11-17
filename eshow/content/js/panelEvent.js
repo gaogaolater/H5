@@ -14,9 +14,18 @@ $(function(){
 		e.preventDefault();
 	});
 	
-	$("#bgPanelClose").click(function(){$("#bgPanel").hide()});
-	$("#picPanelClose").click(function(){$("#picPanel").hide()});
-	$("#animatPanelClose").click(function(){$("#animatPanel").hide()});
+	$("#bgPanelClose").click(function(){
+		$("#bgPanel").hide();
+		$(".cover").hide();
+	});
+	$("#picPanelClose").click(function(){
+		$("#picPanel").hide();
+		$(".cover").hide();
+	});
+	$("#animatPanelClose").click(function(){
+		$("#animatPanel").hide();
+		$(".cover").hide();
+	});
 	//动画选择方式
 	$("#animatType").bind("change",function(){
 		var type = Number($("#animatType option:selected").val());
@@ -73,5 +82,6 @@ $(function(){
 		var animateVal=name + " " + animatTime+"s linear "+animatDelay+"s "+count;
 		etouch.editTarget.css("animation",animateVal);
 		$("#animatPanel").hide();
+		$(".cover").hide();
 	});
 })

@@ -66,6 +66,7 @@
 		},
 		animatEvent:function(){
 			if(etouch.editTarget){
+				$(".cover").show();
 				$("#animatPanel").show();
 			}
 		},
@@ -369,6 +370,7 @@
 				alert("请先添加页面");
 				return;
 			}
+			$(".cover").show();
 			$("#picPanel").show();
 			//etouch.append("<img id='imgap' src='http://res.eqxiu.com/group1/M00/BB/5F/yq0KA1Ru0-WASRNsAABwW066NG0877.png'/>");
 		},
@@ -379,6 +381,7 @@
 				alert("请先添加页面");
 				return;
 			}
+			$(".cover").show();
 			$("#bgPanel").show();
 		},
 		removeBackgroundPic:function(){},
