@@ -1,74 +1,4 @@
-﻿
-$(function(){
-	$("#animatType").bind("change",function(){
-		var type = Number($("#animatType option:selected").val());
-		if(type==0||type==1){
-			$("#animatDirectionTr").hide();
-		}
-		else{
-			$("#animatDirectionTr").show();
-		}
-	});
-	
-	$("#audio_btn").click(function(){
-		var className = $(this).attr("class");
-		if(className.indexOf("rotate")!=-1){
-			$(this).removeClass("rotate");
-			$("#media")[0].stop();
-		}
-		else{
-			$(this).addClass("rotate");
-		}
-	});
-	
-	$("#animatPanelOK").click(function(){
-		var val = Number($("#animatType option:selected").val());
-		if(val == 0){
-			etouch.editTarget.css("animation","");
-			$("#animatPanel").hide();
-			return;
-		}
-		var direct = Number($("#animatDirection option:selected").val());
-		var name = '';
-		switch(val){
-			case 3:
-				name="bounceIn";
-				break;
-			case 2:
-				name="fadeIn";
-				break;
-			case 1:
-				name="fadeIn";
-				break;
-		}
-		if(val==2||val==3){
-			switch(direct){
-				case 3:
-					name+="Up";
-					break;
-				case 2:
-					name+="Right";
-					break;
-				case 1:
-					name+="Down";
-					break;
-				case 0:
-					name+="Left";
-					break;
-			}
-		}
-		var animatTime = $("#animatTime").val();
-		var animatDelay = $("#animatDelay").val();
-		var animatTimes = $("#animatTimes").val();
-		var animatInfinite = $("#animatInfinite:checked").val();
-		var count=animatInfinite=="on"?"infinite":animatTimes;
-		var animateVal=name + " " + animatTime+"s linear "+animatDelay+"s "+count;
-		etouch.editTarget.css("animation",animateVal);
-		$("#animatPanel").hide();
-	});
-})
-
-$(function () {
+﻿$(function () {
 	etouch = {
 		phoneW:0,
 		phoneH:0,
@@ -94,7 +24,6 @@ $(function () {
 			this.save();//开启定时保存
 		},
 		bindEvent:function(){
-			var phoneDom = $("#phonescreen");
 			$("#menuAddText").click(this.addText);
 			$("#menuAddBgPic").click(this.addBackgroundPic);
 			$("#menuAddAudio").click(this.addAudio);
@@ -104,35 +33,36 @@ $(function () {
 			$("#addpage").click(this.addPage);
 			$("#bgPicList").click(this.setBgPicEvent);
 			$("#picPanel").click(this.setPicEvent);
-			$("#bgPanelClose").click(function(){$("#bgPanel").hide()});
-			$("#picPanelClose").click(function(){$("#picPanel").hide()});
-			$("#phonescreen").bind("mousedown",this.mousedown);
-			$("#phonescreen").bind("mousemove",this.mousemove);
-			$("#phonescreen").bind("mouseup",this.mouseup);
+			
+			$("#phonescreen")
+				.bind("mousedown",this.mousedown)
+				.bind("mousemove",this.mousemove)
+				.bind("mouseup",this.mouseup)
+				.bind("contextmenu",this.showContextMenu);
 			
 			$("#fonttoolbar").click(this.fontbarEvent);
 			$("#cm_edit").bind('click',this.editFont);
 			$("#cm_delete").bind('click',this.deleteObj);
 			$("#cm_animat").bind('click',this.animatEvent);
-			$("#animatPanelClose").click(function(){$("#animatPanel").hide()});
+			
 			$("#contextmenu").click(this.clickContextMenu);
-			phoneDom.bind("contextmenu",this.showContextMenu);
 			//删除和选中事件
-			$("#pageList").click(function(e){
-				var tagName = e.target.tagName;
-				if(tagName=="SPAN"){
-					var index = Number($(e.target).parent().attr("index"));
-					etouch.removePage(index);
-				}
-				else if(tagName=="A"){
-					var index = Number($(e.target).parent().attr("index"));
-					etouch.showPage(index);
-				}
-				else if(tagName=="P"){
-					var index = Number($(e.target).attr("index"));
-					etouch.showPage(index);
-				}
-			});
+			$("#pageList").click(this.pageTabEvent);
+		},
+		pageTabEvent:function(e){
+			var tagName = e.target.tagName;
+			if(tagName=="SPAN"){
+				var index = Number($(e.target).parent().attr("index"));
+				etouch.removePage(index);
+			}
+			else if(tagName=="A"){
+				var index = Number($(e.target).parent().attr("index"));
+				etouch.showPage(index);
+			}
+			else if(tagName=="P"){
+				var index = Number($(e.target).attr("index"));
+				etouch.showPage(index);
+			}
 		},
 		animatEvent:function(){
 			if(etouch.editTarget){

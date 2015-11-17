@@ -15,13 +15,25 @@
             <li id="menuAddBgPic">背景</li>
             <li id="menuAddAudio">音乐</li>
             <li id="menuAddPic">图片</li>
-            <li id="menuAddVideo">视频</li>
-            <li id="menuAddAnimat">特效</li>
+			<li id="menuCopy">复制</li>
+			<li id="menuSave">保存</li>
 			<li onclick="window.open('preview.html')">预览</li>
         </ul>
     </section>
     <section class="middle">
-        <div class="left"></div>
+        <div class="left">
+			<div id="leftTab" class="top">
+				<span target="con_tmp" class="current">模板</span>
+				<span target="con_my">我的</span>
+			</div>
+			<div class="content" id="con_tmp">
+				
+			</div>
+			<div class="content" id="con_my" style="display:none;">
+				
+			</div>
+			<div class="bottom"></div>
+		</div>
         <div class="center">
             <div class="phoneBox">
                 <div class="phonetop"></div>
@@ -170,6 +182,7 @@ style="position:absolute;width:100px;height:100px;top:100px;left:10px;display:no
 <div id="hidArea" style="display:none;"></div>
 <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
 <script src="./content/js/eshow.js" type="text/javascript"></script>
+<script src="./content/js/panelEvent.js" type="text/javascript"></script>
 <script src="./content/js/bgPicData.js" type="text/javascript"></script>
 <script src="./content/js/picData.js" type="text/javascript"></script>
 <script src="./content/js/fullPage.js" type="text/javascript"></script>
