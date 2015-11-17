@@ -455,6 +455,14 @@ html,body{height:100%;}
         -webkit-transform: rotate(360deg)
     }
 }
-
+#contextmenu{width:80px;border:1px solid gray;background-color:white;z-index:9999;}
+#contextmenu li{
+	width:80%;height:25px;line-height:25px;text-align:left;
+	font-size:12px;float:left;padding-left:20%;cursor:pointer;
+}
+#contextmenu li:hover{
+	background-color:#08A1EF;
+}
+#phonescreen img{position:absolute;}
 
 

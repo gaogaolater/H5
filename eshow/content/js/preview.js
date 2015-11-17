@@ -5,15 +5,9 @@ $(function(){
 	$("html").css("font-size",percent);
 	
 	//加载html
-	var html=localStorage.webAppHTML;
+	var html = localStorage.webAppHTML;
 	if(html){
 		$("#phonescreen").html(html);
-		$(".pageitem").css('display', '');
-		$(".pageitem").addClass("page");
-		$(".pageitem").eq(0).addClass("current");
-		$("#contextmenu").remove();
-		$("#fonttoolbar").remove();
-		$(".bar").remove();
 	}
 	
 	//滑屏效果

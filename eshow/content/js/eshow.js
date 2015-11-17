@@ -465,10 +465,17 @@ $(function () {
 				var jsonData=_this.webApp;
 				if(jsonData.page.length>0){
 					localStorage.webApp = JSON.stringify(jsonData);
+					//删除没用的标签
 					var html = $("#phonescreen").html();
-					
-					
-					localStorage.webAppHTML = html;
+					$("#hidArea").html(html);
+					$("#hidArea .pageitem")
+						.css('display', '')
+						.addClass("page")
+						.eq(0).addClass("current");
+					$("#hidArea #contextmenu").remove();
+					$("#hidArea #fonttoolbar").remove();
+					$("#hidArea .bar").remove();
+					localStorage.webAppHTML = $("#hidArea").html();
 				}
 			},3000);
 		}
@@ -477,9 +484,9 @@ $(function () {
 	
 	//整个app对象
 	var webapp = function(){
-		this.page=[];
-		this.transition='';
-		this.audio={};
+		this.page = [];
+		this.transition = '';
+		this.audio = {};
 	}
 	
 	/*

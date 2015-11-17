@@ -6,26 +6,6 @@
 	<link href="./content/css/css.css" rel="stylesheet" type="text/css" />
 	<link href="./content/css/main.css" rel="stylesheet" type="text/css" />
 	<link href="./content/css/animat.css" rel="stylesheet" type="text/css" />
-    <style>
-        .move{position:absolute;}
-        .text{font-size:16px;font-weight:bold;text-align:center;}
-        #contextmenu{width:80px;border:1px solid gray;background-color:white;z-index:9999;}
-        #contextmenu li{
-			width:80%;height:25px;line-height:25px;text-align:left;
-			font-size:12px;float:left;padding-left:20%;cursor:pointer;
-		}
-		#contextmenu li:hover{
-			background-color:#08A1EF;
-		}
-        #phonescreen img{position:absolute;}
-        .rotate	
-        {
-            animation: 9.5s linear 0s normal none infinite rotate;
-            -webkit-animation:9.5s linear 0s normal none infinite rotate;
-        }
-    </style>
-	<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
-	<script src="./content/js/eshow.js" type="text/javascript"></script>
 </head>
 <body>
 <article class="wrap">
@@ -188,31 +168,13 @@ style="position:absolute;width:100px;height:100px;top:100px;left:10px;display:no
 	<div class="bar bar-ne bar-radius" style="cursor: ne-resize; touch-action: pan-x pan-y; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: block;"></div>
 </div>
 <div id="hidArea" style="display:none;"></div>
+<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+<script src="./content/js/eshow.js" type="text/javascript"></script>
 <script src="./content/js/bgPicData.js" type="text/javascript"></script>
 <script src="./content/js/picData.js" type="text/javascript"></script>
 <script src="./content/js/fullPage.js" type="text/javascript"></script>
 <script>
-runSection = new FullPage({
-	id : 'phonescreen',                            // id of contain
-	slideTime : 800,                               // time of slide
-    effect : {                                     // slide effect
-        transform : {
-        	translate : 'Y',					   // 'X'|'Y'|'XY'|'none'
-        	scale : [0, 1],					   // [scalefrom, scaleto]
-        	rotate : [0, 0]					   // [rotatefrom, rotateto]
-        },
-        opacity : [0, 1]                           // [opacityfrom, opacityto]
-    },                           
-	mode : 'touch,wheel',               // mode of fullpage
-	easing : [0, .93, .39, .98],
-	callback : function(index, thisPage) {     // callback when pageChange
-        if (index === 0) {
-        	//autoPlay(runPage.thisPage() + 1);
-        } else {
-        	//clearTimeout(interval);
-        }
-    }
-});
+
 </script>
 </body>
 </html>
