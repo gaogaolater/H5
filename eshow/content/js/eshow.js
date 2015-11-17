@@ -72,24 +72,28 @@ $(function () {
 	etouch = {
 		phoneW:0,
 		phoneH:0,
-		webApp:{page:[],transition:'',audio:{}},//整个页面对象
 		dragTarget:null,//当前拖拽的物体
 		currentPageIndex:-1,//-1表示没有页面
 		isEdit:false,//是否文字编辑状态
 		editTarget:null,//右键目标
 		moveTarget:null,//拖拽目标
 		resizeTarget:null,//缩放目标
-		editDivTarget:null,//编辑div目标
 		getCurrentPage:function(){
 			if(etouch.currentPageIndex==-1){
 				return null;
 			}
-			return $(".pageitem").eq(etouch.currentPageIndex);
+			return $("#phonescreen .pageitem").eq(etouch.currentPageIndex);
 		},
 		init:function(){
 			this.phoneW = Math.round($("#phonescreen").width());
 			this.phoneH = Math.round($("#phonescreen").height());
-			this.save();
+			this.loadBgPic();
+			this.loadPic();
+			this.loadData();
+			this.bindEvent();//最后绑定事件不能颠倒
+			this.save();//开启定时保存
+		},
+		bindEvent:function(){
 			var phoneDom = $("#phonescreen");
 			$("#menuAddText").click(this.addText);
 			$("#menuAddBgPic").click(this.addBackgroundPic);
@@ -105,11 +109,13 @@ $(function () {
 			$("#phonescreen").bind("mousedown",this.mousedown);
 			$("#phonescreen").bind("mousemove",this.mousemove);
 			$("#phonescreen").bind("mouseup",this.mouseup);
-			$("#cm_edit").click(this.editFont);
+			
 			$("#fonttoolbar").click(this.fontbarEvent);
-			$("#cm_delete").click(this.deleteObj);
-			$("#cm_animat").click(this.animatEvent);
+			$("#cm_edit").bind('click',this.editFont);
+			$("#cm_delete").bind('click',this.deleteObj);
+			$("#cm_animat").bind('click',this.animatEvent);
 			$("#animatPanelClose").click(function(){$("#animatPanel").hide()});
+			$("#contextmenu").click(this.clickContextMenu);
 			phoneDom.bind("contextmenu",this.showContextMenu);
 			//删除和选中事件
 			$("#pageList").click(function(e){
@@ -127,10 +133,6 @@ $(function () {
 					etouch.showPage(index);
 				}
 			});
-			this.loadBgPic();
-			this.loadPic();
-			this.loadJsonData();
-			$("#contextmenu").click(this.clickContextMenu);
 		},
 		animatEvent:function(){
 			if(etouch.editTarget){
@@ -186,9 +188,6 @@ $(function () {
 			etouch.moveTarget = null;
 			etouch.resizeTarget = null;
 			$("#contextmenu").hide();
-			if(etouch.editDivTarget!=null){
-				
-			}
 		},
 		toRem:function(num){
 			return (num/16)+"rem";
@@ -325,30 +324,70 @@ $(function () {
 			}
 		},
 		//加载JSON数据
-		loadJsonData:function(){
-			if(localStorage.webApp == null)return;
-			var jsonData=JSON.parse(localStorage.webApp);
-			if(jsonData.page.length==0)return;
-			var pageList = jsonData.page;
-			//etouch.webApp = localStorage.webApp;
-			for(var i=0;i<pageList.length;i++){
-				etouch.addPage();
-				etouch.loadPage(i,pageList[i]);
+		loadData:function(){
+			var html = localStorage.designHTML;
+			if(html){
+				$("#phonescreen").html(html);
+				var pageSize = $("#phonescreen .pageitem").size();
+				//加载页面列表
+				for(var i=0;i<pageSize;i++){
+					etouch.addPageTab(i);
+				}
 			}
 		},
-		loadPage:function(pageIndex,pageObj){
-			etouch.setBgPic(pageIndex,pageObj.background.url);
+		//添加右侧页面的tab
+		addPageTab:function(index){
+			var currentPageLen = index+1;
+			var pageList=$("#pageList");
+			//选中当前页面
+			pageList.append("<p name='pageTab' index='"+index+"'><a>第"+currentPageLen+"页</a><span name='deletePage'>╳</span></p>");
+			etouch.showPage(index);
+			pageList[0].scrollTop = pageList[0].scrollHeight;
+			etouch.currentPageIndex = index;
+		},
+		//添加页面 包括 页面tab
+		addPage:function(){
+			var index = $("#pageList p[name='pageTab']").size();
+			$("#phonescreen").append("<div class='pageitem'></div>");
+			etouch.addPageTab(index);
+		},
+		removePage:function(index){
+			var removePageObj = $("#phonescreen .pageitem").eq(index);
+			//如果删除当前页 则选择另外的页面显示
+			if(removePageObj.css("display")!='none'){
+				if($("#phonescreen .pageitem").length!=1){
+					var showIndex = index==0?1:index-1;
+					etouch.showPage(showIndex);
+				}
+			}
+			removePageObj.remove();
+			$("#pageList span[name='deletePage']").eq(index).parent().remove();
+			if($("#phonescreen .pageitem").size()==0){
+				etouch.currentPageIndex = -1;
+			}
+			else{
+				//重新排序
+				$("#pageList span[name='deletePage']").each(function(i,obj){
+					$(obj).parent().attr("index",i);
+					$(obj).parent().find("a").text("第"+(i+1)+"页");
+					if($(obj).parent().css("backgroundColor")===""){
+						etouch.currentPageIndex = i;
+					}
+				});
+			}
+		},
+		havePage:function(){
+			return etouch.currentPageIndex!=-1?true:false;
 		},
 		setBgPic:function(pageIndex,bgUrl){
 			$("#phonescreen .pageitem")
 				.eq(pageIndex)
 				.css("backgroundImage","url('"+bgUrl+"')");
-			etouch.webApp.page[pageIndex].background.url = bgUrl;
 		},
 		//设置图片地址
 		setBgPicEvent:function(e){
 			if(e.target.tagName=="IMG"){
-				if(etouch.webApp.page.length>0){
+				if(etouch.havePage()){
 					var path = $(e.target).attr("path");
 					etouch.setBgPic(etouch.currentPageIndex,path);
 				}
@@ -357,7 +396,7 @@ $(function () {
 		},
 		setPicEvent:function(e){
 			if(e.target.tagName=="IMG"){
-				if(etouch.webApp.page.length>0){
+				if(etouch.havePage()){
 					var path = $(e.target).attr("path");
 					var page = etouch.getCurrentPage();
 					var id = "editpic" + new Date().getTime();
@@ -373,45 +412,6 @@ $(function () {
 			var picList = panelBgPicData.list;
 			for(var i=0;i<30;i++){
 				bgPicPanel.append("<img path='http://res.eqxiu.com/"+picList[i].path+"' src='http://res.eqxiu.com/"+picList[i].tmbPath+"'/>");
-			}
-		},
-		addPage:function(){
-			var page = etouch.webApp.page;
-			page.push(new pageObj());
-			var index=page.length-1;
-			var pageList=$("#pageList");
-			//选中当前页面
-			pageList.append("<p index='"+index+"'><a>第"+page.length+"页</a><span name='deletePage'>╳</span></p>");
-			$("#phonescreen").append("<div class='pageitem'></div>");
-			etouch.showPage(index);
-			pageList[0].scrollTop = pageList[0].scrollHeight;
-			etouch.currentPageIndex = page.length-1;
-		},
-		removePage:function(index){
-			etouch.webApp.page.splice(index,1);
-			var removePage=$(".pageitem").eq(index);
-			//如果删除当前页 则选择另外的页面显示
-			if(removePage.css("display")!='none'){
-				if($(".pageitem").length!=1){
-					var showIndex=index==0?1:index-1;
-					etouch.showPage(showIndex);
-				}
-			}
-			removePage.remove();
-			$("span[name='deletePage']").eq(index).parent().remove();
-			if($(".pageitem").size()==0){
-				etouch.currentPageIndex = -1;
-			}
-			else{
-				//重新排序
-				$("span[name='deletePage']").each(function(i,obj){
-					$(obj).parent().attr("index",i);
-					$(obj).parent().find("a").text("第"+(i+1)+"页");
-					
-					if($(obj).parent().css("backgroundColor")===""){
-						etouch.currentPageIndex = i;
-					}
-				});
 			}
 		},
 		showPage:function(index){
@@ -459,58 +459,26 @@ $(function () {
 		addVideo:function(){},
 		removeVideo:function(){},
 		save:function(){
-			var _this=this;
 			//持续保存
 			setInterval(function(){
-				var jsonData=_this.webApp;
-				if(jsonData.page.length>0){
-					localStorage.webApp = JSON.stringify(jsonData);
+				if(etouch.havePage()){
 					//删除没用的标签
-					var html = $("#phonescreen").html();
-					$("#hidArea").html(html);
+					var originHtml = $("#phonescreen").html();
+					$("#hidArea").html(originHtml);
 					$("#hidArea .pageitem")
 						.css('display', '')
 						.addClass("page")
 						.eq(0).addClass("current");
-					$("#hidArea #contextmenu").remove();
-					$("#hidArea #fonttoolbar").remove();
+					$("#hidArea").find("#contextmenu").remove();
+					$("#hidArea").find("#fonttoolbar").remove();
 					$("#hidArea .bar").remove();
-					localStorage.webAppHTML = $("#hidArea").html();
+					var simpleHtml = $("#hidArea").html();
+					$("#hidArea").html("");
+					localStorage.webAppHTML = simpleHtml;
+					localStorage.designHTML = originHtml;
 				}
-			},3000);
+			},5000);
 		}
 	}
 	etouch.init();
-	
-	//整个app对象
-	var webapp = function(){
-		this.page = [];
-		this.transition = '';
-		this.audio = {};
-	}
-	
-	/*
-	//webapp对象 是一个json
-	{
-		page:[{
-			background:{url:'',animat:[]},
-			image:[{url:'',css:{width:0rem,height:0rem,top:0rem,left:0rem,animation:''}}],
-			text:[{val:'',css:{width:0rem,height:0rem,top:0rem,left:0rem,animation:''}}],
-			effect:[],//特效
-			video:[{url:'',css:{width:0rem,height:0rem,top:0rem,left:0rem,animation:'',autoPlay:false}}]
-		}],
-		transition:'',//转场效果
-		audio:{url:'',autoplay:true},
-		wrap:{width:10rem;height:20rem;}
-	}
-	*/
 });
-
-//页面对象
-var pageObj = function(){
-	this.background={};
-	this.image=[];
-	this.text=[];
-	this.effect=[];
-	this.video=[];
-}
