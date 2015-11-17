@@ -326,6 +326,7 @@
 					var path = $(e.target).attr("path");
 					etouch.setBgPic(etouch.currentPageIndex,path);
 				}
+				$(".cover").hide();
 				$("#bgPanel").hide();
 			}
 		},
@@ -339,6 +340,7 @@
 					$("#"+id).append($("#resizeborder").html());
 					$("#"+id).find(".bar").hide();
 				}
+				$(".cover").hide();
 				$("#picPanel").hide();
 			}
 		},
