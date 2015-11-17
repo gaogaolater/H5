@@ -1,8 +1,8 @@
 ﻿*.dll
 *.pdb
 *.suo
-EShow_Web/EShow/bin
-EShow_Web/EShow/packages
+*.cache
+bin/
 packages/
 obj/
 Debug/
