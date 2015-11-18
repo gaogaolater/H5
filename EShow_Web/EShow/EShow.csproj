@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Controllers\HomeAjaxController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DTO\BaseResp.cs" />
     <Compile Include="Enum\ResrouceEnum.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

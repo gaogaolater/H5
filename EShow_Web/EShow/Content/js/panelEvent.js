@@ -1,12 +1,45 @@
 $(function () {
-    //保存
-    $("#menuSave").click(function () { 
-        
-    });
-
     //设置图片 背景图
     getResource(1);
     getResource(2);
+    loadAppList();
+
+    //保存
+    $("#menuSave").click(function () {
+        var name = $("#webappName").val();
+        var webappId = $("#webappId").val();
+        if (name == '' || name == null) {
+            name = prompt("请输入应用的名称", "")
+            if (!name) {
+                return;
+            }
+        }
+        var data = {
+            webAppHTML: encodeURI(localStorage.webAppHTML),
+            designHTML: encodeURI(localStorage.designHTML),
+            id: webappId,
+            name: name,
+            state: 1
+        };
+        console.log(data);
+        $.post('/homeajax/saveapp', data, function (obj) {
+            console.log(obj);
+            //加载app列表
+            loadAppList();
+        });
+    });
+
+    function loadAppList() {
+        $.post('/homeajax/getapplist', function (obj) {
+            $("#con_my").html("");
+            if (obj instanceof Array) {
+                for (var i = 0; i < obj.length; i++) {
+                    var app = obj[i];
+                    $("#con_my").append("<p id='" + app.AppId + "'>" + app.Name + "</p>");
+                }
+            }
+        });
+    }
 
     //上传回调
     uploadCallBack = function (obj) {
@@ -67,7 +100,10 @@ $(function () {
     $("#addApp").click(function () {
         var name = prompt("请输入应用的名称", "")
         if (name) {
-            console.log(name);
+            $(".scene_title").text(name);
+            $("#webappId").val(0);
+            $("#webappName").val(name);
+            etouch.clear();
         }
     });
 

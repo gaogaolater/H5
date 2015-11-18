@@ -10,10 +10,11 @@ namespace EShow.Service
 {
     public class WebAppService
     {
-        public List<Models.WebApp> GetAppList()
+        public static List<Models.WebApp> GetAppList()
         {
             List<Models.WebApp> list = null;
-            string sql = "select * from webapp where isdelete = 0 order by appid desc";
+            string sql = @"select `AppId`,`Name`,`CreateTime`,`Creator`,`State`,`IsDelete` 
+                        from webapp where isdelete = 0 order by appid desc";
             using (IDbConnection conn = DBHelper.OpenConnection())
             {
                 list = conn.Query<Models.WebApp>(sql).ToList();
@@ -21,7 +22,18 @@ namespace EShow.Service
             return list;
         }
 
-        public void AddApp(Models.WebApp model)
+        public static Models.WebApp GetAppById(int id)
+        {
+            Models.WebApp model = null;
+            string sql = @"select * from webapp where AppId=@id";
+            using (IDbConnection conn = DBHelper.OpenConnection())
+            {
+                model = conn.Query<Models.WebApp>(sql, new { id = id }).FirstOrDefault();
+            }
+            return model;
+        }
+
+        public static void AddApp(Models.WebApp model)
         {
             string sql = @"INSERT INTO `webapp`
                         (`Name`,
@@ -44,15 +56,13 @@ namespace EShow.Service
             }
         }
 
-        public void UpdateApp(Models.WebApp model)
+        public static void UpdateApp(Models.WebApp model)
         {
             string sql = @"UPDATE `webapp`
                             SET
                             `Name` = @Name,
                             `DesignHTML` = @DesignHTML,
                             `PreviewHTML` = @PreviewHTML,
-                            `CreateTime` = @CreateTime,
-                            `Creator` = @Creator,
                             `State` = @State
                             WHERE `AppId` = @AppId";
             using (IDbConnection conn = DBHelper.OpenConnection())
@@ -61,7 +71,7 @@ namespace EShow.Service
             }
         }
 
-        public void DeleteAppById(int id)
+        public static void DeleteAppById(int id)
         {
             string sql = @"UPDATE `webapp`
                             SET
