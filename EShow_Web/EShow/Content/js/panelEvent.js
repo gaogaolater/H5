@@ -5,24 +5,50 @@ $(function () {
     loadAppList();
     //显示左侧con_my的tab
     showAppTab = function (id) {
+        var selectedId = getSelectedAppId();
+        if (id != selectedId && selectedId != -1) {
+            //            if (confirm("您还未保存，需要保存么？")) {
+            //                $("#menuSave").click();
+            //            }
+            //            else {
+            //                return;
+            //            }
+        }
         $("#con_my .current").removeClass("current");
         $("#appTab" + id).addClass("current");
         $.post('/homeajax/getappbyid', { id: id }, function (obj) {
             etouch.clear();
-            localStorage.designHTML = decodeURI(obj.DesignHTML);
-            etouch.init();
+            localStorage.designHTML = decodeURIComponent(obj.DesignHTML);
+            $(".scene_title").text(obj.Name);
+            $("#webappId").val(obj.AppId);
+            $("#webappName").val(obj.Name);
+            etouch.loadData();
         });
+    }
+
+    function getSelectedAppId() {
+        if ($("#con_my .current").size() <= 0) {
+            return -1;
+        }
+        var selectedId = $("#con_my .current").attr("id").replace("appTab", "");
+        selectedId = Number(selectedId);
+        return selectedId;
     }
 
     deleteApp = function (id) {
+        var selectedId = getSelectedAppId();
         $.post('/homeajax/deleteappbyid', { id: id }, function (obj) {
             etouch.clear();
-            loadAppList();
+            if (id == selectedId) {
+                loadAppList();
+            }
+            else {
+                loadAppList(selectedId);
+            }
         });
     }
 
-    //保存
-    $("#menuSave").click(function () {
+    function saveWebApp() {
         var name = $("#webappName").val();
         var webappId = $("#webappId").val();
         if (name == '' || name == null) {
@@ -32,28 +58,41 @@ $(function () {
             }
         }
         var data = {
-            webAppHTML: encodeURI(localStorage.webAppHTML),
-            designHTML: encodeURI(localStorage.designHTML),
+            webAppHTML: encodeURIComponent(localStorage.webAppHTML),
+            designHTML: encodeURIComponent(localStorage.designHTML),
             id: webappId,
             name: name,
             state: 1
         };
+        console.log(decodeURIComponent(data.webAppHTML));
         console.log(data);
         $.post('/homeajax/saveapp', data, function (obj) {
             console.log(obj);
-            //加载app列表
-            loadAppList();
+            if (obj.success) {
+                //加载app列表
+                loadAppList(obj.data);
+            }
         });
-    });
+    }
 
-    function loadAppList() {
+    //保存
+    $("#menuSave").click(saveWebApp);
+
+    function loadAppList(selectedIndex) {
         $.post('/homeajax/getapplist', function (obj) {
             $("#con_my").html("");
-            if (obj instanceof Array) {
+            if (obj instanceof Array && obj.length > 0) {
                 for (var i = 0; i < obj.length; i++) {
                     var app = obj[i];
+                    if (i == 0 && selectedIndex == undefined) {
+                        selectedIndex = app.AppId;
+                    }
                     $("#con_my").append("<p onclick='showAppTab(" + app.AppId + ")' id='appTab" + app.AppId + "'><a>" + app.Name + "</a><span onclick='deleteApp(" + app.AppId + ")'>╳</span></p>");
                 }
+                showAppTab(selectedIndex);
+            }
+            else {
+                etouch.clear();
             }
         });
     }
@@ -114,6 +153,7 @@ $(function () {
         $("#file").click();
     });
 
+    //添加app
     $("#addApp").click(function () {
         var name = prompt("请输入应用的名称", "")
         if (name) {
@@ -121,6 +161,7 @@ $(function () {
             $("#webappId").val(0);
             $("#webappName").val(name);
             etouch.clear();
+            saveWebApp();
         }
     });
 

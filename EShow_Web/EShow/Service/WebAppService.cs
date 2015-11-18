@@ -33,8 +33,9 @@ namespace EShow.Service
             return model;
         }
 
-        public static void AddApp(Models.WebApp model)
+        public static int AddApp(Models.WebApp model)
         {
+            int id = 0;
             string sql = @"INSERT INTO `webapp`
                         (`Name`,
                         `DesignHTML`,
@@ -49,11 +50,12 @@ namespace EShow.Service
                         @PreviewHTML,
                         @CreateTime,
                         @Creator,
-                        @State,0)";
+                        @State,0);select @@IDENTITY";
             using (IDbConnection conn = DBHelper.OpenConnection())
             {
-                conn.Execute(sql,model);
+                id = conn.Query<int>(sql, model).FirstOrDefault();
             }
+            return id;
         }
 
         public static void UpdateApp(Models.WebApp model)

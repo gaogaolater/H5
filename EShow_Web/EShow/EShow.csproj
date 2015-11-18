@@ -123,9 +123,6 @@
     <Content Include="Views\Home\Preview.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Upload\audio\" />
     <Folder Include="Upload\bgpic\" />
     <Folder Include="Upload\pagepic\" />

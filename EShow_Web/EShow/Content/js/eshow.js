@@ -28,7 +28,7 @@
             $("#menuAddPic").click(this.addPic);
             $("#menuAddVideo").click(this.addVideo);
             $("#menuAddAnimat").click(this.addAnimat);
-            $("#addpage").click(this.addPage);
+            $("#addPage").click(this.addPage);
             $("#bgPicList").click(this.setBgPicEvent);
             $("#picPanel").click(this.setPicEvent);
 
@@ -290,7 +290,7 @@
             etouch.currentPageIndex = index;
         },
         //添加页面 包括 页面tab
-        addPage: function () {
+        addPage: function (e) {
             var index = $("#pageList p[name='pageTab']").size();
             $("#phonescreen").append("<div class='pageitem'></div>");
             etouch.addPageTab(index);
@@ -352,13 +352,8 @@
                 $(".cover").hide();
                 $("#picPanel").hide();
             }
-        },
-        loadBgPic: function () {
-            var bgPicPanel = $("#bgPicList");
-            var picList = panelBgPicData.list;
-            for (var i = 0; i < 30; i++) {
-                bgPicPanel.append("<img path='http://res.eqxiu.com/" + picList[i].path + "' src='http://res.eqxiu.com/" + picList[i].tmbPath + "'/>");
-            }
+            e.stopPropagation();
+            e.preventDefault();
         },
         showPage: function (index) {
             etouch.currentPageIndex = index;
@@ -376,9 +371,6 @@
             etouch.getCurrentPage().append("<div id='" + id + "' type='editdiv' draggable='true' class='comp-resize defaultfontstyle' name='pagefont'><span type='drag_inner_text'>请在这里编辑</span></div>");
             $("#" + id).append($("#resizeborder").html());
             $("#" + id).find(".bar").hide();
-        },
-        removeText: function () {
-
         },
         addPic: function () {
             if (etouch.currentPageIndex == -1) {

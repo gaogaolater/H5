@@ -21,8 +21,9 @@ namespace EShow.Service
             return list;
         }
 
-        public static void AddResource(Models.Resource resource)
+        public static int AddResource(Models.Resource resource)
         {
+            int id = 0;
             string sql = @"INSERT INTO `resource`
                         (`Name`,
                         `Path`,
@@ -38,11 +39,12 @@ namespace EShow.Service
                         @Type,
                         @CreateTime,
                         @Creator,
-                        0)";
+                        0);select @@IDENTITY";
             using (IDbConnection conn = DBHelper.OpenConnection())
             {
-                conn.Execute(sql,resource);
+                id = conn.Query<int>(sql,resource).FirstOrDefault();
             }
+            return id;
         }
 
         public static void DeleteResourceById(int id)

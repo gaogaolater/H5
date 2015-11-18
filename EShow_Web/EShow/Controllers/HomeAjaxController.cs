@@ -59,14 +59,14 @@ namespace EShow.Controllers
         public ActionResult SaveApp(string webAppHTML,
             string designHTML, int id, string name, int state)
         {
-            if (string.IsNullOrEmpty(webAppHTML) || string.IsNullOrEmpty(designHTML))
-            {
-                return Json(new BaseResp<string>()
-                {
-                    success = false,
-                    message = "提交数据错误"
-                });
-            }
+            //if (string.IsNullOrEmpty(webAppHTML) || string.IsNullOrEmpty(designHTML))
+            //{
+            //    return Json(new BaseResp<string>()
+            //    {
+            //        success = false,
+            //        message = "提交数据错误"
+            //    });
+            //}
             if (string.IsNullOrEmpty(name)) 
             {
                 return Json(new BaseResp<string>()
@@ -90,7 +90,7 @@ namespace EShow.Controllers
                 }
                 else
                 {
-                    WebAppService.AddApp(new Models.WebApp()
+                    id = WebAppService.AddApp(new Models.WebApp()
                     {
                         DesignHTML = designHTML,
                         IsDelete = false,
@@ -101,9 +101,10 @@ namespace EShow.Controllers
                         Creator = ""
                     });
                 }
-                return Json(new BaseResp<string>()
+                return Json(new BaseResp<int>()
                 {
-                    success = true
+                    success = true,
+                    data = id
                 });
             }
             catch (Exception ex)
