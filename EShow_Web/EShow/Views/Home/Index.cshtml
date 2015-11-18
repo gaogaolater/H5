@@ -80,7 +80,12 @@
         </div>
     </section>
 </article>
-
+<form id="formUpload" method="post" action="/home/upload" 
+enctype="multipart/form-data" target="ifraUpload">
+    <input type="hidden" name="type" id="type" value=""/>
+    <input name="file" id="file" type="file" onchange="submit()" />
+</form>
+<iframe id="ifraUpload" name="ifraUpload" style="display:none;"></iframe>
 <div id="bgPanel" class="bgPanel" style="display:none;">
 	<div class="top">背景素材库</div>
 	<div id="bgPicList" class="middle">
@@ -88,6 +93,7 @@
 	</div>
 	<div class="bottom">
 		<span id="bgPanelClose">取消</span>
+        <span id="bgPanelUpload">上传</span>
 	</div>
 </div>
 
@@ -98,6 +104,7 @@
 	</div>
 	<div class="bottom">
 		<span id="picPanelClose">取消</span>
+        <span id="picPanelUpload">上传</span>
 	</div>
 </div>
 

@@ -17,8 +17,6 @@
 		init:function(){
 			this.phoneW = Math.round($("#phonescreen").width());
 			this.phoneH = Math.round($("#phonescreen").height());
-			this.loadBgPic();
-			this.loadPic();
 			this.loadData();
 			this.bindEvent();//最后绑定事件不能颠倒
 			this.save();//开启定时保存
@@ -251,13 +249,7 @@
 			else
 				return true;
 		},
-		loadPic:function(){
-			var picPanel = $("#picList");
-			var pics = panelPicData.list;
-			for(var i=0;i<30;i++){
-				picPanel.append("<img path='http://res.eqxiu.com/"+pics[i].path+"' src='http://res.eqxiu.com/"+pics[i].tmbPath+"'/>");
-			}
-		},
+		
 		//加载JSON数据
 		loadData:function(){
 			var html = localStorage.designHTML;
