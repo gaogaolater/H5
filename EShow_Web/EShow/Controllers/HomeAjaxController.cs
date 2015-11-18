@@ -30,6 +30,26 @@ namespace EShow.Controllers
             return Json(list);
         }
 
+        public ActionResult DeleteAppById(int id)
+        {
+            try
+            {
+                WebAppService.DeleteAppById(id);
+                return Json(new BaseResp<string>()
+                {
+                    success = true
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new BaseResp<string>()
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
+        }
+
         public ActionResult GetAppById(int id)
         {
             var app = WebAppService.GetAppById(id);

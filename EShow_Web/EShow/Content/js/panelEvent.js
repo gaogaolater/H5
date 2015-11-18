@@ -3,6 +3,23 @@ $(function () {
     getResource(1);
     getResource(2);
     loadAppList();
+    //显示左侧con_my的tab
+    showAppTab = function (id) {
+        $("#con_my .current").removeClass("current");
+        $("#appTab" + id).addClass("current");
+        $.post('/homeajax/getappbyid', { id: id }, function (obj) {
+            etouch.clear();
+            localStorage.designHTML = decodeURI(obj.DesignHTML);
+            etouch.init();
+        });
+    }
+
+    deleteApp = function (id) {
+        $.post('/homeajax/deleteappbyid', { id: id }, function (obj) {
+            etouch.clear();
+            loadAppList();
+        });
+    }
 
     //保存
     $("#menuSave").click(function () {
@@ -35,7 +52,7 @@ $(function () {
             if (obj instanceof Array) {
                 for (var i = 0; i < obj.length; i++) {
                     var app = obj[i];
-                    $("#con_my").append("<p id='" + app.AppId + "'>" + app.Name + "</p>");
+                    $("#con_my").append("<p onclick='showAppTab(" + app.AppId + ")' id='appTab" + app.AppId + "'><a>" + app.Name + "</a><span onclick='deleteApp(" + app.AppId + ")'>╳</span></p>");
                 }
             }
         });

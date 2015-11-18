@@ -47,9 +47,25 @@
             //删除和选中事件
             $("#pageList").click(this.pageTabEvent);
             $("#menuSave").click(this.saveEvent);
+            $("#con_my").click(this.myAppPanelEvent);
         },
         saveEvent: function () {
 
+        },
+        myAppPanelEvent: function (e) {
+            var tagName = e.target.tagName;
+            if (tagName == "SPAN") {
+                var index = Number($(e.target).parent().attr("index"));
+                etouch.removePage(index);
+            }
+            else if (tagName == "A") {
+                var index = Number($(e.target).parent().attr("index"));
+                etouch.showPage(index);
+            }
+            else if (tagName == "P") {
+                var index = Number($(e.target).attr("index"));
+                etouch.showPage(index);
+            }
         },
         pageTabEvent: function (e) {
             var tagName = e.target.tagName;

@@ -101,10 +101,22 @@ html,body{height:100%;}
     line-height: 40px;
     color: black;
     font-size: 14px;
-	color:white;
     text-align: center;
-    background-color: #08A1EF;
+    background-color:#E1E1E1;
     cursor: pointer;
+}
+.wrap .middle .left .content .current
+{
+    background-color: #08A1EF;
+}
+.wrap .middle .left .content p span
+{ 
+    display:block;
+	float:right;
+	width:20px;height:40px;line-height:40px;
+	text-align:center;margin-right:5px;
+	color:black;font-weight:bolder;
+	cursor:pointer;
 }
 .wrap .middle .left .bottom
 {
