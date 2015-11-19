@@ -38,6 +38,8 @@
 				.bind("mouseup", this.mouseup)
 				.bind("contextmenu", this.showContextMenu);
 
+            //注释掉的时间都是 html动态加载的 只能绑定一次 所以就写到标签上了
+            //可以优化
             //$("#fonttoolbar").on("click", this.fontbarEvent);
             //            $("#cm_edit").bind('click', this.editFont);
             //            $("#cm_delete").bind('click', this.deleteObj);
