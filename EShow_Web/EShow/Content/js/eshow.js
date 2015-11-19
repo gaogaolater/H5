@@ -38,7 +38,7 @@
 				.bind("mouseup", this.mouseup)
 				.bind("contextmenu", this.showContextMenu);
 
-            $("#fonttoolbar").click(this.fontbarEvent);
+            //$("#fonttoolbar").on("click", this.fontbarEvent);
             //            $("#cm_edit").bind('click', this.editFont);
             //            $("#cm_delete").bind('click', this.deleteObj);
             //            $("#cm_animat").bind('click', this.animatEvent);
@@ -98,6 +98,7 @@
             etouch.editTarget.css({ "color": color });
         },
         fontbarEvent: function (e) {
+            e = e || window.event;
             $("#fontsizelist").hide();
             var target = e.target;
             if (target.tagName == "A") {

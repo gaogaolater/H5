@@ -3,6 +3,7 @@
 }
 <input type="hidden" name="webappId" id="webappId" value="0"/>
 <input type="hidden" name="webappName" id="webappName" value=""/>
+<input id="colorpicker" style="z-index:0; position:absolute;top:0;left:0;width:0;height:0;opacity:0;" oninput="etouch.changeColor(this.value)" type="color" value="#ff00ff">
 <div class="cover"></div>
 <article class="wrap">
     <section class="top">
@@ -48,7 +49,7 @@
                             </ul>
                         </div>
 						
-						<div class="fonttoolbar" id="fonttoolbar" style="display:none;z-index:900;">
+						<div class="fonttoolbar" id="fonttoolbar" onclick="etouch.fontbarEvent()" style="display:none;z-index:900;">
 							<a id="size">大小
 								<ul id="fontsizelist" style="display:none;">
 									<li val='96'>96px</li>
@@ -62,7 +63,7 @@
 									<li val='12'>12px</li>
 								</ul>
 							</a>
-							<a id="color">颜色<input id="colorpicker" style="width:0;height:0;opacity:0;" oninput="etouch.changeColor(this.value)" type="color" value="#ff00ff"></a>
+							<a id="color">颜色</a>
 							<a id="bolder">粗体</a>
 						</div>
 					
