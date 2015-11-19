@@ -10,26 +10,32 @@ namespace EShow.Controllers
 {
     public class HomeAjaxController : Controller
     {
-        //
-        // GET: /HomeAjax/
-
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+        /// <summary>
+        /// 根据TYPE获取图片、音乐等资源
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public ActionResult GetResource(int type)
         {
             var list = ResourceService.GetResourceListByType(type);
             return Json(list.Select(o => new { id = o.ResourceId, path = o.Path, type = o.Type }));
         }
 
+        /// <summary>
+        /// 获取APP列表
+        /// </summary>
+        /// <returns></returns>
         public ActionResult GetAppList()
         {
             var list = WebAppService.GetAppList();
             return Json(list);
         }
 
+        /// <summary>
+        /// 根据id删除app
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult DeleteAppById(int id)
         {
             try
@@ -50,23 +56,29 @@ namespace EShow.Controllers
             }
         }
 
+        /// <summary>
+        /// 根据id获取App
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult GetAppById(int id)
         {
             var app = WebAppService.GetAppById(id);
             return Json(app);
         }
 
+        /// <summary>
+        /// 保存APP
+        /// </summary>
+        /// <param name="webAppHTML"></param>
+        /// <param name="designHTML"></param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public ActionResult SaveApp(string webAppHTML,
             string designHTML, int id, string name, int state)
         {
-            //if (string.IsNullOrEmpty(webAppHTML) || string.IsNullOrEmpty(designHTML))
-            //{
-            //    return Json(new BaseResp<string>()
-            //    {
-            //        success = false,
-            //        message = "提交数据错误"
-            //    });
-            //}
             if (string.IsNullOrEmpty(name)) 
             {
                 return Json(new BaseResp<string>()

@@ -11,12 +11,20 @@ namespace EShow.Controllers
 {
     public class HomeController : Controller
     {
-
+        /// <summary>
+        /// 首页
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// 预览页面
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Preview(int id)
         {
             if (id <= 0)
@@ -27,6 +35,11 @@ namespace EShow.Controllers
             return View(app);
         }
 
+        /// <summary>
+        /// 上传资源
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Upload(int type)
         {
