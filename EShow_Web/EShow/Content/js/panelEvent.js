@@ -10,12 +10,16 @@ $(function () {
             return;
         }
         else {
-            window.open("/home/preview?id="+id);
+            window.open("/home/preview?id=" + id);
         }
     }
     //显示左侧con_my的tab
     showAppTab = function (id) {
         var selectedId = getSelectedAppId();
+        if (selectedId == id) {
+            window.event.stopPropagation();
+            return;
+        }
         if (id != selectedId && selectedId != -1) {
             //            if (confirm("您还未保存，需要保存么？")) {
             //                $("#menuSave").click();
@@ -46,16 +50,18 @@ $(function () {
     }
 
     deleteApp = function (id) {
-        var selectedId = getSelectedAppId();
-        $.post('/homeajax/deleteappbyid', { id: id }, function (obj) {
-            etouch.clear();
-            if (id == selectedId) {
-                loadAppList();
-            }
-            else {
-                loadAppList(selectedId);
-            }
-        });
+        if (confirm("确定要删除么？")) {
+            var selectedId = getSelectedAppId();
+            $.post('/homeajax/deleteappbyid', { id: id }, function (obj) {
+                etouch.clear();
+                if (id == selectedId) {
+                    loadAppList();
+                }
+                else {
+                    //loadAppList(selectedId);
+                }
+            });
+        }
     }
 
     function saveWebApp() {
@@ -75,13 +81,15 @@ $(function () {
             name: name,
             state: 1
         };
-        console.log(decodeURIComponent(data.webAppHTML));
-        console.log(data);
         $.post('/homeajax/saveapp', data, function (obj) {
             console.log(obj);
             if (obj.success) {
                 //加载app列表
                 loadAppList(obj.data);
+                $("#webappId").val(obj.data);
+            }
+            else {
+                alert("保存失败");
             }
         });
     }
@@ -165,13 +173,13 @@ $(function () {
     });
 
     //添加app
-    $("#addApp").click(function () {
+    $("#addApp").click(function (e) {
         var name = prompt("请输入应用的名称", "")
         if (name) {
+            etouch.clear();
             $(".scene_title").text(name);
             $("#webappId").val(0);
             $("#webappName").val(name);
-            etouch.clear();
             saveWebApp();
         }
     });

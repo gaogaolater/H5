@@ -39,9 +39,9 @@
 				.bind("contextmenu", this.showContextMenu);
 
             $("#fonttoolbar").click(this.fontbarEvent);
-//            $("#cm_edit").bind('click', this.editFont);
-//            $("#cm_delete").bind('click', this.deleteObj);
-//            $("#cm_animat").bind('click', this.animatEvent);
+            //            $("#cm_edit").bind('click', this.editFont);
+            //            $("#cm_delete").bind('click', this.deleteObj);
+            //            $("#cm_animat").bind('click', this.animatEvent);
 
             $("#contextmenu").click(this.clickContextMenu);
             //删除和选中事件
@@ -276,6 +276,7 @@
                     for (var i = 0; i < pageSize; i++) {
                         etouch.addPageTab(i);
                     }
+                    etouch.showPage(0);
                 }
             }
         },
@@ -287,13 +288,18 @@
             pageList.append("<p name='pageTab' index='" + index + "'><a>第" + currentPageLen + "页</a><span name='deletePage'>╳</span></p>");
             etouch.showPage(index);
             pageList[0].scrollTop = pageList[0].scrollHeight;
-            etouch.currentPageIndex = index;
         },
         //添加页面 包括 页面tab
         addPage: function (e) {
+            if ($("#webappId").val() == "0") {
+                alert("请先添加或选择APP，然后再添加页面");
+                return;
+            }
             var index = $("#pageList p[name='pageTab']").size();
             $("#phonescreen").append("<div class='pageitem'></div>");
             etouch.addPageTab(index);
+            window.event.stopPropagation();
+            window.event.preventDefault();
         },
         removePage: function (index) {
             var removePageObj = $("#phonescreen .pageitem").eq(index);
@@ -410,27 +416,28 @@
             etouch.editTarget = null; //右键目标
             etouch.moveTarget = null; //拖拽目标
             etouch.resizeTarget = null; //缩放目标
+            $("#webappId").val(0);
+            $("#webappName").val("");
+            $(".scene_title").text("");
         },
         save: function () {
             //持续保存
-            setInterval(function () {
-                if (etouch.havePage()) {
-                    //删除没用的标签
-                    var originHtml = $("#phonescreen").html();
-                    $("#hidArea").html(originHtml);
-                    $("#hidArea .pageitem")
-						.css('display', '')
-						.addClass("page")
-						.eq(0).addClass("current");
-                    $("#hidArea").find("#contextmenu").remove();
-                    $("#hidArea").find("#fonttoolbar").remove();
-                    $("#hidArea .bar").remove();
-                    var simpleHtml = $("#hidArea").html();
-                    $("#hidArea").html("");
-                    localStorage.webAppHTML = simpleHtml;
-                    localStorage.designHTML = originHtml;
-                }
-            }, 5000);
+            if (etouch.havePage()) {
+                //删除没用的标签
+                var originHtml = $("#phonescreen").html();
+                $("#hidArea").html(originHtml);
+                $("#hidArea .pageitem")
+					.css('display', '')
+					.addClass("page")
+					.eq(0).addClass("current");
+                $("#hidArea").find("#contextmenu").remove();
+                $("#hidArea").find("#fonttoolbar").remove();
+                $("#hidArea .bar").remove();
+                var simpleHtml = $("#hidArea").html();
+                $("#hidArea").html("");
+                localStorage.webAppHTML = simpleHtml;
+                localStorage.designHTML = originHtml;
+            }
         }
     }
     etouch.init();
