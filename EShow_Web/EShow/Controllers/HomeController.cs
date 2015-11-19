@@ -17,9 +17,14 @@ namespace EShow.Controllers
             return View();
         }
 
-        public ActionResult Preview()
+        public ActionResult Preview(int id)
         {
-            return View();
+            if (id <= 0)
+            {
+                return Content("id错误");
+            }
+            Models.WebApp app = WebAppService.GetAppById(id);
+            return View(app);
         }
 
         [HttpPost]

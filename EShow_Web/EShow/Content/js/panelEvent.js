@@ -49,6 +49,7 @@ $(function () {
     }
 
     function saveWebApp() {
+        etouch.save();
         var name = $("#webappName").val();
         var webappId = $("#webappId").val();
         if (name == '' || name == null) {

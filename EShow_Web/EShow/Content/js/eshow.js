@@ -39,9 +39,9 @@
 				.bind("contextmenu", this.showContextMenu);
 
             $("#fonttoolbar").click(this.fontbarEvent);
-            $("#cm_edit").bind('click', this.editFont);
-            $("#cm_delete").bind('click', this.deleteObj);
-            $("#cm_animat").bind('click', this.animatEvent);
+//            $("#cm_edit").bind('click', this.editFont);
+//            $("#cm_delete").bind('click', this.deleteObj);
+//            $("#cm_animat").bind('click', this.animatEvent);
 
             $("#contextmenu").click(this.clickContextMenu);
             //删除和选中事件
@@ -352,8 +352,8 @@
                 $(".cover").hide();
                 $("#picPanel").hide();
             }
-            e.stopPropagation();
-            e.preventDefault();
+            //e.stopPropagation();
+            //e.preventDefault();
         },
         showPage: function (index) {
             etouch.currentPageIndex = index;
