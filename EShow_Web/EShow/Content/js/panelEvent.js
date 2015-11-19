@@ -3,6 +3,16 @@ $(function () {
     getResource(1);
     getResource(2);
     loadAppList();
+    preview = function () {
+        var id = Number($("#webappId").val());
+        if (id <= 0) {
+            alert("请选择要预览的APP");
+            return;
+        }
+        else {
+            window.open("/home/preview?id="+id);
+        }
+    }
     //显示左侧con_my的tab
     showAppTab = function (id) {
         var selectedId = getSelectedAppId();
