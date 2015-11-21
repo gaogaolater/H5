@@ -108,6 +108,17 @@ enctype="multipart/form-data" target="ifraUpload">
 	</div>
 </div>
 
+<div id="audioPanel" class="bgPanel audioPanel" >
+	<div class="top">音乐素材库</div>
+	<div id="audioList" class="middle">
+		
+	</div>
+	<div class="bottom">
+		<span id="audioPanelClose">取消</span>
+        <span id="audioPanelUpload">上传</span>
+	</div>
+</div>
+
 <div id="animatPanel" class="animatPanel" style="display:none;">
 	<div class="top">动画库</div>
 	<div class="middle">
@@ -183,9 +194,23 @@ style="position:absolute;width:100px;height:100px;top:100px;left:10px;display:no
 	<div class="bar bar-ne bar-radius" style="cursor: ne-resize; touch-action: pan-x pan-y; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: block;"></div>
 </div>
 <div id="hidArea" style="display:none;"></div>
-
+<audio loop="loop" src="" id="media" preload="auto" autoplay="autoplay"></audio>
+<script id="audioTmp" type="text/html">
+<ul>
+    {{each}}
+    <li>
+        <div>{{$value.name}}</div>
+        <span>
+            <a path='{{$value.path}}'></a>
+            <em></em>
+        </span>
+    </li>
+    {{/each}}
+</ul>
+</script>
 @section script
 {
+<script src="/Content/js/template.js" type="text/javascript"></script>
 <script src="/content/js/eshow.js" type="text/javascript"></script>
 <script src="/content/js/panelEvent.js" type="text/javascript"></script>
 <script src="/content/js/bgPicData.js" type="text/javascript"></script>

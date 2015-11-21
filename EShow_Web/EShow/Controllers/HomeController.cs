@@ -48,20 +48,25 @@ namespace EShow.Controllers
             {
                 return Content(string.Format(result, "false", "附件类型错误", ""));
             }
+            string allowExt = string.Empty;
             string directName = string.Empty;
             switch (type)
             {
                 case 1:
                     directName = "bgpic";
+                    allowExt = ".jpg|.gif|.png";
                     break;
                 case 2:
                     directName = "pagepic";
+                    allowExt = ".jpg|.gif|.png";
                     break;
                 case 3:
                     directName = "audio";
+                    allowExt = ".mp3";
                     break;
                 case 4:
                     directName = "vedio";
+                    allowExt = ".mp4";
                     break;
             }
             StringBuilder strMsg = new StringBuilder();
@@ -74,7 +79,7 @@ namespace EShow.Controllers
                 return Content(string.Format(result, "false", "上传文件为空", ""));
             }
             fileExtension = System.IO.Path.GetExtension(fileName);
-            string allowExt = ".mp3|.jpg|.gif|.png";
+            
             if (allowExt.IndexOf(fileExtension) == -1)
             {
                 return Content(string.Format(result, "false", "不允许的附件类型", ""));

@@ -18,7 +18,7 @@ namespace EShow.Controllers
         public ActionResult GetResource(int type)
         {
             var list = ResourceService.GetResourceListByType(type);
-            return Json(list.Select(o => new { id = o.ResourceId, path = o.Path, type = o.Type }));
+            return Json(list.Select(o => new { id = o.ResourceId, name = o.Name, path = o.Path, type = o.Type }));
         }
 
         /// <summary>

@@ -515,6 +515,60 @@ html,body{height:100%;}
 .animatPanel table td input[type='checkbox']{
 	width:20px;float:left;margin-top:5px;
 }
+
+.audioPanel .middle ul
+{
+    color:#666;
+    width:100%;    
+    display:block;
+}
+
+.audioPanel .middle ul li
+{ 
+    text-align:left;
+    font-size:1rem;
+    display:block;
+    width:100%;    
+    height:30px;
+    line-height:30px;
+    border-bottom:1px dotted gray;
+}
+.audioPanel .middle ul li:hover
+{
+    background-color:#f3f3f3;    
+}
+.audioPanel .middle ul li div
+{
+    width:75%;
+    float:left;
+    margin-left:5%;
+    cursor:pointer;
+}
+.audioPanel .middle ul li span
+{
+    display:inline-block;
+    float:right;
+    width:20%;
+}
+.audioPanel .middle ul li span em
+{
+    float:right;
+    margin-right:20px;
+    font-size:.9rem;    
+}
+.audioPanel .middle ul li span a
+{
+    display:block;
+    width:15px;
+    height:15px;
+    float:right;
+    margin-right:20px;
+    margin-top:7px;
+    background:url(../images/bfbtn.png) no-repeat;
+    background-size:100% 100%;
+    cursor:pointer;
+}
+
 /*音乐相关*/
 #audio_btn {
     position: absolute;
