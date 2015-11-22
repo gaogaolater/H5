@@ -559,14 +559,20 @@ html,body{height:100%;}
 .audioPanel .middle ul li span a
 {
     display:block;
-    width:15px;
-    height:15px;
+    width:18px;
+    height:18px;
     float:right;
     margin-right:20px;
     margin-top:7px;
-    background:url(../images/bfbtn.png) no-repeat;
-    background-size:100% 100%;
+    background:url(../images/audiobtn.jpg) no-repeat;
+    background-position:-59px -10px;
+    background-size:80px 62px;
     cursor:pointer;
+}
+
+.audioPanel .middle ul li span .pause
+{
+    background-position:-40px -10px;
 }
 
 /*音乐相关*/

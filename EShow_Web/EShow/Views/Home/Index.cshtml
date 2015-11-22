@@ -40,6 +40,9 @@
                 <div class="phonescreenwrap">
                     <!--这里的代码可以直接预览-->
                     <div class="phonescreen" id="phonescreen">
+                        <div id="audio_btn" class="off video_exist rotate" style="display: none;">
+	                        <audio loop="loop" src="" id="media" preload="auto" autoplay="autoplay"></audio>
+                        </div>
 						<div id="contextmenu" style="display:none;z-index:999;">
                             <ul>
                                 <li id="cm_edit" onclick="etouch.editFont()">编辑</li>
@@ -108,7 +111,7 @@ enctype="multipart/form-data" target="ifraUpload">
 	</div>
 </div>
 
-<div id="audioPanel" class="bgPanel audioPanel" >
+<div id="audioPanel" class="bgPanel audioPanel" style="display:none;">
 	<div class="top">音乐素材库</div>
 	<div id="audioList" class="middle">
 		
@@ -194,14 +197,13 @@ style="position:absolute;width:100px;height:100px;top:100px;left:10px;display:no
 	<div class="bar bar-ne bar-radius" style="cursor: ne-resize; touch-action: pan-x pan-y; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: block;"></div>
 </div>
 <div id="hidArea" style="display:none;"></div>
-<audio loop="loop" src="" id="media" preload="auto" autoplay="autoplay"></audio>
 <script id="audioTmp" type="text/html">
 <ul>
     {{each}}
     <li>
-        <div>{{$value.name}}</div>
+        <div path='{{$value.path}}' onclick='setBgAudio(this)'>{{$value.name}}</div>
         <span>
-            <a path='{{$value.path}}'></a>
+            <a onclick='playPause(this)' path='{{$value.path}}'></a>
             <em></em>
         </span>
     </li>

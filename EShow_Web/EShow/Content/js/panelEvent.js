@@ -4,6 +4,32 @@
     getResource(2);
     getResource(3);
     loadAppList();
+    var audio = $("#media")[0];
+    playPause = function (obj) {
+        var control = $(obj);
+        var path = control.attr("path");
+        if (control.attr("class") == "pause") {
+            control.removeClass("pause");
+            audio.pause();
+        }
+        else {
+            audio.pause();
+            $("#audioList").find(".pause").removeClass("pause");
+            control.addClass("pause");
+            if (audio.src.endsWith(path) == false) {
+                audio.src = path;
+            }
+            audio.play();
+        }
+    }
+    setBgAudio = function (obj) {
+        var path = $(obj).attr("path");
+        $("#audioPanel").hide();
+        $("#audio_btn").show();
+        audio.src = path;
+        audio.pause();
+        $(".cover").hide();
+    }
     preview = function () {
         var id = Number($("#webappId").val());
         if (id <= 0) {
@@ -138,6 +164,7 @@
                 else if (type == 3) { $("#audioList").html(""); }
                 if (obj instanceof Array) {
                     if (type == 3) {
+                        audio.pause();
                         var html = template('audioTmp', obj);
                         document.getElementById('audioList').innerHTML = html;
                         return;
@@ -281,6 +308,7 @@
 
     $("#audioPanelClose").click(function () {
         $("#audioPanel").hide();
+        $(".cover").hide();
     });
 
     $("#audioPanelUpload").click(function () {
