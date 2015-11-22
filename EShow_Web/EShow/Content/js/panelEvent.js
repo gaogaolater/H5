@@ -26,8 +26,8 @@
         var path = $(obj).attr("path");
         $("#audioPanel").hide();
         $("#audio_btn").show();
-        audio.src = path;
-        audio.pause();
+        audio.setAttribute("src", path);
+        //audio.pause();
         $(".cover").hide();
     }
     preview = function () {

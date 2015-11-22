@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Text;
 using EShow.Enum;
 using EShow.Service;
+using System.IO;
 
 namespace EShow.Controllers
 {
@@ -92,7 +93,12 @@ namespace EShow.Controllers
             ///'可根据扩展名字的不同保存到不同的文件夹
             ///注意：可能要修改你的文件夹的匿名写入权限 
             var newfileName = Guid.NewGuid() + fileExtension;
-            var filePath = System.Web.HttpContext.Current.Request.MapPath("/Upload/" + directName + "/") + newfileName;
+            var path = System.Web.HttpContext.Current.Request.MapPath("/Upload/" + directName + "/");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            var filePath = path + newfileName;
             var virtualPath = "/Upload/" + directName + "/" + newfileName;
             try
             {

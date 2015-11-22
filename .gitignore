@@ -1,6 +1,7 @@
 ﻿*.pdb
 *.suo
 *.cache
+*.mp3
 bin/
 packages/
 obj/
