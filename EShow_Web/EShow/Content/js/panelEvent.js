@@ -27,7 +27,7 @@
         $("#audioPanel").hide();
         $("#audio_btn").show();
         $("#media").attr("src", path);
-        //audio.pause();
+        audio.pause();
         $(".cover").hide();
     }
     preview = function () {
@@ -303,6 +303,11 @@
     });
 
     $("#menuAddAudio").click(function () {
+        //添加背景
+        if (etouch.currentPageIndex == -1) {
+            alert("请先添加页面");
+            return;
+        }
         $(".cover").show();
         $("#audioPanel").show();
     });
