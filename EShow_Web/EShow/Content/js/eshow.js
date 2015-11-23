@@ -17,7 +17,7 @@
         init: function () {
             this.phoneW = Math.round($("#phonescreen").width());
             this.phoneH = Math.round($("#phonescreen").height());
-            this.loadData();
+            //this.loadData();
             this.bindEvent(); //最后绑定事件不能颠倒
             this.save(); //开启定时保存
         },
@@ -351,9 +351,8 @@
             return etouch.currentPageIndex != -1 ? true : false;
         },
         setBgPic: function (pageIndex, bgUrl) {
-            $("#phonescreen .pageitem")
-				.eq(pageIndex)
-				.css("backgroundImage", "url('" + bgUrl + "')");
+            var pageItem = $("#phonescreen .pageitem").eq(pageIndex)[0];
+            pageItem.style.backgroundImage = "url('" + bgUrl + "')";
         },
         //设置图片地址
         setBgPicEvent: function (e) {

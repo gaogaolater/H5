@@ -26,7 +26,7 @@
         var path = $(obj).attr("path");
         $("#audioPanel").hide();
         $("#audio_btn").show();
-        audio.setAttribute("src", path);
+        $("#media").attr("src", path);
         //audio.pause();
         $(".cover").hide();
     }
@@ -43,10 +43,10 @@
     //显示左侧con_my的tab
     showAppTab = function (id) {
         var selectedId = getSelectedAppId();
-        if (selectedId == id) {
-            window.event.stopPropagation();
-            return;
-        }
+        //        if (selectedId == id) {
+        //            window.event.stopPropagation();
+        //            return;
+        //        }
         if (id != selectedId && selectedId != -1) {
             //            if (confirm("您还未保存，需要保存么？")) {
             //                $("#menuSave").click();
@@ -125,6 +125,7 @@
     $("#menuSave").click(saveWebApp);
 
     function loadAppList(selectedIndex) {
+        localStorage.designHTML = "";
         $.post('/homeajax/getapplist', function (obj) {
             $("#con_my").html("");
             if (obj instanceof Array && obj.length > 0) {
