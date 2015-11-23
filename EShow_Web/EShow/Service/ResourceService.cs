@@ -24,14 +24,14 @@ namespace EShow.Service
         public static int AddResource(Models.Resource resource)
         {
             int id = 0;
-            string sql = @"INSERT INTO `resource`
-                        (`Name`,
-                        `Path`,
-                        `Tip`,
-                        `Type`,
-                        `CreateTime`,
-                        `Creator`,
-                        `IsDelete`)
+            string sql = @"INSERT INTO resource
+                        (Name,
+                        Path,
+                        Tip,
+                        Type,
+                        CreateTime,
+                        Creator,
+                        IsDelete)
                         VALUES
                         (@Name,
                         @Path,
@@ -49,7 +49,7 @@ namespace EShow.Service
 
         public static void DeleteResourceById(int id)
         {
-            string sql = @"update `resource` set isdelete = 1 where resourceid=@id";
+            string sql = @"update resource set isdelete = 1 where resourceid=@id";
             using (IDbConnection conn = DBHelper.OpenConnection())
             {
                 conn.Execute(sql, new { id = id });

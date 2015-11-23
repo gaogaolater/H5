@@ -13,7 +13,7 @@ namespace EShow.Service
         public static List<Models.WebApp> GetAppList()
         {
             List<Models.WebApp> list = null;
-            string sql = @"select `AppId`,`Name`,`CreateTime`,`Creator`,`State`,`IsDelete` 
+            string sql = @"select AppId,Name,CreateTime,Creator,State,IsDelete 
                         from webapp where isdelete = 0 order by appid desc";
             using (IDbConnection conn = DBHelper.OpenConnection())
             {
@@ -36,14 +36,14 @@ namespace EShow.Service
         public static int AddApp(Models.WebApp model)
         {
             int id = 0;
-            string sql = @"INSERT INTO `webapp`
-                        (`Name`,
-                        `DesignHTML`,
-                        `PreviewHTML`,
-                        `CreateTime`,
-                        `Creator`,
-                        `State`,
-                        `IsDelete`)
+            string sql = @"INSERT INTO webapp
+                        (Name,
+                        DesignHTML,
+                        PreviewHTML,
+                        CreateTime,
+                        Creator,
+                        State,
+                        IsDelete)
                         VALUES
                         (@Name,
                         @DesignHTML,
@@ -60,13 +60,13 @@ namespace EShow.Service
 
         public static void UpdateApp(Models.WebApp model)
         {
-            string sql = @"UPDATE `webapp`
+            string sql = @"UPDATE webapp
                             SET
-                            `Name` = @Name,
-                            `DesignHTML` = @DesignHTML,
-                            `PreviewHTML` = @PreviewHTML,
-                            `State` = @State
-                            WHERE `AppId` = @AppId";
+                            Name = @Name,
+                            DesignHTML = @DesignHTML,
+                            PreviewHTML = @PreviewHTML,
+                            State = @State
+                            WHERE AppId = @AppId";
             using (IDbConnection conn = DBHelper.OpenConnection())
             {
                 conn.Execute(sql, model);
@@ -75,10 +75,10 @@ namespace EShow.Service
 
         public static void DeleteAppById(int id)
         {
-            string sql = @"UPDATE `webapp`
+            string sql = @"UPDATE webapp
                             SET
-                            `isdelete` = 1 
-                            WHERE `AppId` = @id";
+                            isdelete = 1 
+                            WHERE AppId = @id";
             using (IDbConnection conn = DBHelper.OpenConnection())
             {
                 conn.Execute(sql, new { id = id });
