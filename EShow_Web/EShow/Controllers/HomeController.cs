@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Text;
 using EShow.Enum;
 using EShow.Service;
+using System.IO;
 
 namespace EShow.Controllers
 {
@@ -48,20 +49,25 @@ namespace EShow.Controllers
             {
                 return Content(string.Format(result, "false", "附件类型错误", ""));
             }
+            string allowExt = string.Empty;
             string directName = string.Empty;
             switch (type)
             {
                 case 1:
                     directName = "bgpic";
+                    allowExt = ".jpg|.gif|.png";
                     break;
                 case 2:
                     directName = "pagepic";
+                    allowExt = ".jpg|.gif|.png";
                     break;
                 case 3:
                     directName = "audio";
+                    allowExt = ".mp3";
                     break;
                 case 4:
                     directName = "vedio";
+                    allowExt = ".mp4";
                     break;
             }
             StringBuilder strMsg = new StringBuilder();
@@ -74,7 +80,7 @@ namespace EShow.Controllers
                 return Content(string.Format(result, "false", "上传文件为空", ""));
             }
             fileExtension = System.IO.Path.GetExtension(fileName);
-            string allowExt = ".mp3|.jpg|.gif|.png";
+            
             if (allowExt.IndexOf(fileExtension) == -1)
             {
                 return Content(string.Format(result, "false", "不允许的附件类型", ""));
@@ -87,7 +93,12 @@ namespace EShow.Controllers
             ///'可根据扩展名字的不同保存到不同的文件夹
             ///注意：可能要修改你的文件夹的匿名写入权限 
             var newfileName = Guid.NewGuid() + fileExtension;
-            var filePath = System.Web.HttpContext.Current.Request.MapPath("/Upload/" + directName + "/") + newfileName;
+            var path = System.Web.HttpContext.Current.Request.MapPath("/Upload/" + directName + "/");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            var filePath = path + newfileName;
             var virtualPath = "/Upload/" + directName + "/" + newfileName;
             try
             {

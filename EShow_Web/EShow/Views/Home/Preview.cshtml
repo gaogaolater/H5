@@ -3,9 +3,6 @@
     Layout = "~/Views/Shared/_LayoutH5.cshtml";
 }
 @model EShow.Models.WebApp
-<div id="audio_btn" class="off video_exist rotate" style="display: block;">
-	<audio loop="" src="http://res.eqxiu.com/group3/M00/BC/89/yq0KZFXVmmyAHzt4AAcihN_3LsQ233.mp3" id="media" autoplay="" preload=""></audio>
-</div>
 <!--这里的代码可以直接预览-->
 <div class="phonescreen" id="phonescreen" style="width:100%;max-width:520px;margin:0 auto;">
 	@Html.Raw(HttpUtility.UrlDecode(Model.PreviewHTML))

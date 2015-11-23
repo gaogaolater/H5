@@ -84,7 +84,9 @@
     <Content Include="Content\css\animat.css" />
     <Content Include="Content\css\css.css" />
     <Content Include="Content\css\main.css" />
+    <Content Include="Content\images\audiobtn.jpg" />
     <Content Include="Content\images\bar-1px.png" />
+    <Content Include="Content\images\bfbtn.png" />
     <Content Include="Content\images\normalmusic.svg" />
     <Content Include="Content\images\phonetitle1.gif" />
     <Content Include="Content\images\phonetitle1.jpg" />
@@ -96,6 +98,7 @@
     <Content Include="Content\js\panelEvent.js" />
     <Content Include="Content\js\picData.js" />
     <Content Include="Content\js\preview.js" />
+    <Content Include="Content\js\template.js" />
     <Content Include="Content\js\zepto.min.js" />
     <Content Include="DLL\Dapper.dll" />
     <Content Include="DLL\MySql.Data.dll" />

@@ -92,7 +92,13 @@
         },
         deleteObj: function () {
             if (etouch.editTarget) {
-                etouch.editTarget.remove();
+                if (etouch.editTarget[0].id == "audio_btn") {
+                    etouch.editTarget.hide();
+                    $("#media")[0].pause();
+                }
+                else {
+                    etouch.editTarget.remove();
+                }
             }
         },
         //字体改变颜色
@@ -139,6 +145,7 @@
         mouseup: function (e) {
             etouch.moveTarget = null;
             etouch.resizeTarget = null;
+            $("#contextmenu").find("li").show();
             $("#contextmenu").hide();
         },
         toRem: function (num) {
@@ -246,8 +253,17 @@
             $("#contextmenu").hide();
         },
         showContextMenu: function (e) {
-            if (etouch.isPageItem(e.target) == false) {
-                var target = $(e.target);
+            var target = $(e.target);
+            console.log(target);
+            if (e.target.id == 'audio_btn') {
+                etouch.editTarget = $(target);
+                var x = e.clientX - $(this)[0].offsetLeft;
+                var y = e.clientY - $(this)[0].offsetTop;
+                $("#contextmenu").css({ position: 'absolute', top: y, left: x });
+                $("#cm_edit,#cm_animat").hide();
+                $("#contextmenu").show();
+            }
+            else if (etouch.currentPageIndex != -1 && etouch.isPageItem(e.target) == false) {
                 var type = target.attr("type");
                 //寻找最外层
                 if (type === undefined || type.indexOf("edit") == -1) {
@@ -263,7 +279,8 @@
         },
         isPageItem: function (target) {
             var className = target.getAttribute("class");
-            if (className == null || className.indexOf("pageitem") == -1)
+            if (className == null
+            || className.indexOf("pageitem") == -1)
                 return false;
             else
                 return true;
@@ -273,6 +290,7 @@
             var html = localStorage.designHTML;
             if (html) {
                 $("#phonescreen").html(html);
+                $("#media")[0].pause();
                 var pageSize = $("#phonescreen .pageitem").size();
                 if (pageSize > 0) {
                     //加载页面列表
