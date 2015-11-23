@@ -1,6 +1,8 @@
 ﻿*.pdb
 *.suo
 *.cache
+*.mp3
+Upload/
 bin/
 packages/
 obj/
