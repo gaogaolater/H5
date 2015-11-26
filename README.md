@@ -1,4 +1,7 @@
 ﻿模仿易企秀做的
+DB_Pdm是数据库powerdesign文件
+EShow_Html是一开始做的静态原型 已过时
+EShow_Web 是asp.net mvc程序
 
 -----------------todo------------------------
 5、动画无限次设计页面的处理
